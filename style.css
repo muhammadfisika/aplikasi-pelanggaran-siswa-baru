@@ -34,16 +34,12 @@ body {
   padding: 30px;
   border-radius: 18px;
   box-shadow:
-    0 8px 30px rgba(0,0,0,0.10);
+    0 8px 30px rgba(0,0,0,.10);
 }
 
 .login-card h1 {
-  margin-bottom: 5px;
   text-align: center;
-}
-
-.login-card h2 {
-  margin-top: 30px;
+  margin-bottom: 5px;
 }
 
 .subtitle {
@@ -102,6 +98,11 @@ button {
   background: #0b5ed7;
 }
 
+.btn-primary:disabled {
+  opacity: .6;
+  cursor: not-allowed;
+}
+
 .btn-logout {
   padding: 10px 18px;
   border-radius: 8px;
@@ -118,19 +119,10 @@ button {
 }
 
 
-/* ================= ERROR ================= */
-
-.error-message {
-  color: #dc3545;
-  text-align: center;
-  min-height: 20px;
-}
-
-
 /* ================= DASHBOARD ================= */
 
 .dashboard {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: auto;
   padding: 20px;
 }
@@ -139,12 +131,14 @@ button {
   background: white;
   padding: 20px;
   border-radius: 15px;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 15px;
+
   box-shadow:
-    0 4px 15px rgba(0,0,0,0.06);
+    0 4px 15px rgba(0,0,0,.06);
 }
 
 .topbar h1 {
@@ -161,8 +155,9 @@ button {
   background: white;
   padding: 25px;
   border-radius: 15px;
+
   box-shadow:
-    0 4px 15px rgba(0,0,0,0.06);
+    0 4px 15px rgba(0,0,0,.06);
 }
 
 
@@ -195,22 +190,18 @@ button {
 }
 
 
-/* ================= SELECTED STUDENT ================= */
+/* ================= SELECTED ================= */
 
 .selected-student {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 15px;
 
   padding: 15px;
-
   margin-bottom: 20px;
 
   background: #eff6ff;
-
   border: 1px solid #bfdbfe;
-
   border-radius: 10px;
 }
 
@@ -228,17 +219,13 @@ button {
 
 .bobot-box {
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
 
   padding: 18px;
-
   margin-bottom: 18px;
 
   border-radius: 10px;
-
   background: #f1f5f9;
 }
 
@@ -251,8 +238,8 @@ button {
 
 .status-message {
   text-align: center;
-  margin-top: 15px;
   min-height: 20px;
+  margin-top: 15px;
 }
 
 .status-success {
@@ -268,7 +255,6 @@ button {
 
 .riwayat-item {
   padding: 15px;
-
   border-bottom: 1px solid #e2e8f0;
 }
 
@@ -287,15 +273,14 @@ button {
   line-height: 1.6;
 }
 
+
+/* ================= BADGE ================= */
+
 .badge {
   display: inline-block;
-
   padding: 4px 8px;
-
   border-radius: 5px;
-
   font-size: 12px;
-
   font-weight: bold;
 }
 
@@ -315,7 +300,201 @@ button {
 }
 
 
+/* ================= GURU FILTER ================= */
+
+.filter-grid {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr;
+
+  gap: 15px;
+}
+
+
+/* ================= SUMMARY ================= */
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 15px;
+
+  margin-top: 20px;
+}
+
+.summary-card {
+  background: white;
+
+  padding: 20px;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 15px rgba(0,0,0,.06);
+
+  text-align: center;
+}
+
+.summary-card span {
+  display: block;
+
+  color: #64748b;
+
+  font-size: 14px;
+
+  margin-bottom: 10px;
+}
+
+.summary-card strong {
+  display: block;
+
+  font-size: 28px;
+}
+
+
+/* ================= SECTION HEADER ================= */
+
+.section-header {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+}
+
+.section-header h2 {
+  margin: 0;
+}
+
+.section-header span {
+  color: #64748b;
+}
+
+
+/* ================= TABLE ================= */
+
+.table-container {
+  overflow-x: auto;
+
+  margin-top: 20px;
+}
+
+.ranking-table {
+  width: 100%;
+
+  border-collapse: collapse;
+
+  min-width: 700px;
+}
+
+.ranking-table th,
+.ranking-table td {
+  padding: 12px;
+
+  border-bottom:
+    1px solid #e2e8f0;
+
+  text-align: left;
+}
+
+.ranking-table th {
+  background: #f8fafc;
+}
+
+.ranking-table tbody tr:hover {
+  background: #f8fafc;
+}
+
+.rank-number {
+  font-size: 18px;
+
+  font-weight: bold;
+}
+
+.student-name {
+  color: #0d6efd;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.student-name:hover {
+  text-decoration: underline;
+}
+
+.total-score {
+  font-size: 20px;
+
+  font-weight: bold;
+}
+
+
+/* ================= DETAIL ================= */
+
+.detail-summary {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, 1fr);
+
+  gap: 10px;
+
+  margin: 20px 0;
+}
+
+.detail-summary > div {
+  padding: 15px;
+
+  background: #f8fafc;
+
+  border-radius: 8px;
+
+  text-align: center;
+}
+
+.detail-item {
+  padding: 15px 0;
+
+  border-bottom:
+    1px solid #e2e8f0;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-item strong {
+  display: block;
+
+  margin-bottom: 5px;
+}
+
+.detail-item small {
+  color: #64748b;
+}
+
+
 /* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+
+  .summary-grid {
+    grid-template-columns:
+      repeat(3, 1fr);
+  }
+
+  .filter-grid {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+}
 
 @media (max-width: 600px) {
 
@@ -325,6 +504,20 @@ button {
 
   .topbar {
     align-items: flex-start;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .summary-grid {
+    grid-template-columns:
+      1fr 1fr;
+  }
+
+  .detail-summary {
+    grid-template-columns:
+      1fr 1fr;
   }
 
   .selected-student {
