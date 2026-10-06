@@ -5,24 +5,30 @@
 
   <meta charset="UTF-8">
 
-  <meta name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-  <meta name="theme-color"
-        content="#0d6efd">
+  <meta
+    name="theme-color"
+    content="#0d6efd">
 
-  <meta name="description"
-        content="Aplikasi Pencatat Pelanggaran Siswa">
+  <meta
+    name="description"
+    content="Aplikasi Pencatat Pelanggaran Siswa">
 
-  <link rel="manifest"
-        href="manifest.json">
+  <link
+    rel="manifest"
+    href="./manifest.json">
 
-  <link rel="stylesheet"
-        href="style.css">
+  <link
+    rel="stylesheet"
+    href="./style.css">
 
   <title>Pelanggaran Siswa</title>
 
 </head>
+
 
 <body>
 
@@ -31,18 +37,24 @@
      LOGIN
 ===================================================== -->
 
-<section id="loginPage"
-         class="page">
+<section
+  id="loginPage"
+  class="page">
 
   <div class="login-card">
 
-    <h1>Pelanggaran Siswa</h1>
+    <h1>
+      Pelanggaran Siswa
+    </h1>
 
     <p class="subtitle">
       SMAN 2 Rangkasbitung
     </p>
 
-    <h2>Login</h2>
+    <h2>
+      Login
+    </h2>
+
 
     <form id="loginForm">
 
@@ -56,6 +68,7 @@
           type="email"
           id="email"
           placeholder="Masukkan email"
+          autocomplete="username"
           required>
 
       </div>
@@ -71,6 +84,7 @@
           type="password"
           id="password"
           placeholder="Masukkan password"
+          autocomplete="current-password"
           required>
 
       </div>
@@ -87,8 +101,9 @@
     </form>
 
 
-    <p id="loginError"
-       class="error-message">
+    <p
+      id="loginError"
+      class="error-message">
     </p>
 
   </div>
@@ -98,25 +113,32 @@
 
 
 <!-- =====================================================
-     DASHBOARD GDS
+     DASHBOARD PETUGAS GDS
 ===================================================== -->
 
-<section id="gdsPage"
-         class="page hidden">
+<section
+  id="gdsPage"
+  class="page hidden">
 
   <div class="dashboard">
+
+
+    <!-- HEADER -->
 
     <div class="topbar">
 
       <div>
 
-        <h1>Petugas GDS</h1>
+        <h1>
+          Petugas GDS
+        </h1>
 
         <p id="gdsUserName">
           -
         </p>
 
       </div>
+
 
       <button
         id="logoutGds"
@@ -129,6 +151,9 @@
     </div>
 
 
+
+    <!-- CATAT PELANGGARAN -->
+
     <div class="dashboard-card">
 
       <h2>
@@ -136,16 +161,18 @@
       </h2>
 
 
+      <!-- CARI SISWA -->
+
       <div class="form-group">
 
         <label for="cariSiswa">
-          Cari Nama Siswa
+          Cari Nama atau NISN Siswa
         </label>
 
         <input
           type="text"
           id="cariSiswa"
-          placeholder="Ketik nama siswa..."
+          placeholder="Ketik nama atau NISN siswa..."
           autocomplete="off">
 
         <div
@@ -155,6 +182,9 @@
 
       </div>
 
+
+
+      <!-- SISWA TERPILIH -->
 
       <div
         id="siswaTerpilih"
@@ -172,6 +202,7 @@
 
         </div>
 
+
         <button
           type="button"
           id="btnGantiSiswa"
@@ -184,10 +215,15 @@
       </div>
 
 
+
+      <!-- FORM PELANGGARAN -->
+
       <div
         id="formPelanggaran"
         class="hidden">
 
+
+        <!-- TANGGAL -->
 
         <div class="form-group">
 
@@ -203,13 +239,17 @@
         </div>
 
 
+
+        <!-- JENIS -->
+
         <div class="form-group">
 
           <label for="jenisPelanggaran">
             Jenis Pelanggaran
           </label>
 
-          <select id="jenisPelanggaran">
+          <select
+            id="jenisPelanggaran">
 
             <option value="">
               -- Pilih Jenis --
@@ -232,6 +272,9 @@
         </div>
 
 
+
+        <!-- RINCIAN -->
+
         <div class="form-group">
 
           <label for="rincianPelanggaran">
@@ -251,6 +294,9 @@
         </div>
 
 
+
+        <!-- WAKTU -->
+
         <div class="form-group">
 
           <label for="waktuPelanggaran">
@@ -265,6 +311,9 @@
         </div>
 
 
+
+        <!-- BOBOT -->
+
         <div class="bobot-box">
 
           <span>
@@ -277,6 +326,9 @@
 
         </div>
 
+
+
+        <!-- SIMPAN -->
 
         <button
           type="button"
@@ -298,6 +350,9 @@
     </div>
 
 
+
+    <!-- RIWAYAT -->
+
     <div class="dashboard-card">
 
       <h2>
@@ -305,10 +360,13 @@
       </h2>
 
       <div id="riwayatPelanggaran">
+
         Memuat data...
+
       </div>
 
     </div>
+
 
   </div>
 
@@ -320,8 +378,9 @@
      DASHBOARD GURU
 ===================================================== -->
 
-<section id="guruPage"
-         class="page hidden">
+<section
+  id="guruPage"
+  class="page hidden">
 
   <div class="dashboard">
 
@@ -367,6 +426,8 @@
       <div class="filter-grid">
 
 
+        <!-- KELAS -->
+
         <div class="form-group">
 
           <label for="filterKelas">
@@ -384,6 +445,9 @@
         </div>
 
 
+
+        <!-- TANGGAL AWAL -->
+
         <div class="form-group">
 
           <label for="filterTanggalAwal">
@@ -396,6 +460,9 @@
 
         </div>
 
+
+
+        <!-- TANGGAL AKHIR -->
 
         <div class="form-group">
 
@@ -413,6 +480,7 @@
 
 
       <button
+        type="button"
         id="btnTampilkanRekap"
         class="btn-primary">
 
@@ -430,7 +498,9 @@
 
 
 
-    <!-- RINGKASAN -->
+    <!-- =================================================
+         RINGKASAN
+    ================================================== -->
 
     <div
       id="ringkasanGuru"
@@ -501,13 +571,17 @@
 
       </div>
 
+
     </div>
 
 
 
-    <!-- RANKING -->
+    <!-- =================================================
+         RANKING
+    ================================================== -->
 
     <div class="dashboard-card">
+
 
       <div class="section-header">
 
@@ -515,8 +589,7 @@
           Ranking Pelanggaran Siswa
         </h2>
 
-        <span
-          id="jumlahDataRanking">
+        <span id="jumlahDataRanking">
           0 siswa
         </span>
 
@@ -531,66 +604,114 @@
 
       </div>
 
-    </div>
-
-
-
-    <!-- DETAIL -->
-
-   <div id="detailGuru" style="display:none;">
-
-  <div class="card">
-
-    <div class="card-header">
-
-      <h3>
-        Detail Pelanggaran Siswa
-      </h3>
 
     </div>
 
-    <div class="card-body">
+
+
+    <!-- =================================================
+         DETAIL SISWA
+    ================================================== -->
+
+    <div
+      id="detailGuru"
+      class="dashboard-card"
+      style="display:none;">
+
+
+      <div class="section-header">
+
+        <h2>
+          Detail Pelanggaran Siswa
+        </h2>
+
+      </div>
+
+
+      <!-- IDENTITAS -->
 
       <h2 id="detailNamaSiswa">
         -
       </h2>
+
 
       <p id="detailIdentitas">
         -
       </p>
 
 
+
+      <!-- RINGKASAN DETAIL -->
+
       <div class="summary-grid">
 
-        <div class="summary-card">
-          <h4>Ringan</h4>
-          <div id="detailRingan">0</div>
-        </div>
 
         <div class="summary-card">
-          <h4>Sedang</h4>
-          <div id="detailSedang">0</div>
+
+          <span>
+            Ringan
+          </span>
+
+          <strong id="detailRingan">
+            0
+          </strong>
+
         </div>
 
-        <div class="summary-card">
-          <h4>Berat</h4>
-          <div id="detailBerat">0</div>
-        </div>
 
         <div class="summary-card">
-          <h4>Total Bobot</h4>
-          <div id="detailTotalBobot">0</div>
+
+          <span>
+            Sedang
+          </span>
+
+          <strong id="detailSedang">
+            0
+          </strong>
+
         </div>
+
+
+        <div class="summary-card">
+
+          <span>
+            Berat
+          </span>
+
+          <strong id="detailBerat">
+            0
+          </strong>
+
+        </div>
+
+
+        <div class="summary-card">
+
+          <span>
+            Total Bobot
+          </span>
+
+          <strong id="detailTotalBobot">
+            0
+          </strong>
+
+        </div>
+
 
       </div>
+
 
 
       <hr>
 
 
+
+      <!-- DAFTAR PELANGGARAN -->
+
       <h3>
         Daftar Pelanggaran
       </h3>
+
 
       <div id="detailDaftarPelanggaran">
 
@@ -599,66 +720,23 @@
       </div>
 
 
+
       <br>
+
+
 
       <button
         type="button"
         id="btnTutupDetail"
-        class="btn btn-secondary"
-      >
+        class="btn-secondary">
+
         Tutup Detail
+
       </button>
 
-    </div>
-
-  </div>
-
-</div>
-
-
-      <p id="detailIdentitas">
-        -
-      </p>
-
-
-      <div class="detail-summary">
-
-        <div>
-          Ringan:
-          <strong id="detailRingan">
-            0
-          </strong>
-        </div>
-
-        <div>
-          Sedang:
-          <strong id="detailSedang">
-            0
-          </strong>
-        </div>
-
-        <div>
-          Berat:
-          <strong id="detailBerat">
-            0
-          </strong>
-        </div>
-
-        <div>
-          Total Bobot:
-          <strong id="detailTotalBobot">
-            0
-          </strong>
-        </div>
-
-      </div>
-
-
-      <div id="detailDaftarPelanggaran">
-
-      </div>
 
     </div>
+
 
   </div>
 
@@ -667,47 +745,14 @@
 
 
 <!-- =====================================================
-     APP
+     JAVASCRIPT
 ===================================================== -->
 
 <script
   type="module"
-  src="app.js">
+  src="./app.js">
 </script>
 
-
-<script>
-
-if ("serviceWorker" in navigator) {
-
-  window.addEventListener(
-    "load",
-    () => {
-
-      navigator.serviceWorker
-        .register("sw.js")
-        .then(() => {
-
-          console.log(
-            "Service Worker aktif"
-          );
-
-        })
-        .catch(error => {
-
-          console.error(
-            "Service Worker gagal:",
-            error
-          );
-
-        });
-
-    }
-  );
-
-}
-
-</script>
 
 </body>
 
