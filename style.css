@@ -1,1 +1,36 @@
+* {
+  box-sizing: border-box;
+}
 
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f1f5f9;
+  color: #1e293b;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 5px;
+}
+
+.card {
+  margin-top: 30px;
+  padding: 25px;
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+}
+
+#statusFirebase {
+  padding: 12px;
+  border-radius: 8px;
+  background: #e2e8f0;
+}
