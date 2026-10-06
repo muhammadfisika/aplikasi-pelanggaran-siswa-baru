@@ -26,210 +26,457 @@
 
 <body>
 
-  <!-- ================= LOGIN ================= -->
 
-  <section id="loginPage"
-           class="page">
+<!-- =====================================================
+     LOGIN
+===================================================== -->
 
-    <div class="login-card">
+<section id="loginPage"
+         class="page">
 
-      <h1>Pelanggaran Siswa</h1>
+  <div class="login-card">
 
-      <p class="subtitle">
-        SMAN 2 Rangkasbitung
-      </p>
+    <h1>Pelanggaran Siswa</h1>
 
-      <h2>Login</h2>
+    <p class="subtitle">
+      SMAN 2 Rangkasbitung
+    </p>
 
-      <form id="loginForm">
+    <h2>Login</h2>
 
-        <div class="form-group">
+    <form id="loginForm">
 
-          <label for="email">
-            Email
-          </label>
+      <div class="form-group">
 
-          <input
-            type="email"
-            id="email"
-            placeholder="Masukkan email"
-            required
-          >
+        <label for="email">
+          Email
+        </label>
+
+        <input
+          type="email"
+          id="email"
+          placeholder="Masukkan email"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label for="password">
+          Password
+        </label>
+
+        <input
+          type="password"
+          id="password"
+          placeholder="Masukkan password"
+          required
+        >
+
+      </div>
+
+
+      <button
+        type="submit"
+        class="btn-primary">
+
+        Login
+
+      </button>
+
+    </form>
+
+
+    <p id="loginError"
+       class="error-message">
+    </p>
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     DASHBOARD GDS
+===================================================== -->
+
+<section id="gdsPage"
+         class="page hidden">
+
+  <div class="dashboard">
+
+
+    <!-- TOPBAR -->
+
+    <div class="topbar">
+
+      <div>
+
+        <h1>Petugas GDS</h1>
+
+        <p id="gdsUserName">
+          -
+        </p>
+
+      </div>
+
+
+      <button
+        id="logoutGds"
+        class="btn-logout">
+
+        Keluar
+
+      </button>
+
+    </div>
+
+
+
+    <!-- FORM PELANGGARAN -->
+
+    <div class="dashboard-card">
+
+      <h2>
+        Catat Pelanggaran Siswa
+      </h2>
+
+
+      <!-- CARI SISWA -->
+
+      <div class="form-group">
+
+        <label for="cariSiswa">
+
+          Cari Nama Siswa
+
+        </label>
+
+
+        <input
+          type="text"
+          id="cariSiswa"
+          placeholder="Ketik nama siswa..."
+          autocomplete="off"
+        >
+
+
+        <div
+          id="hasilPencarian"
+          class="search-results">
 
         </div>
 
-        <div class="form-group">
+      </div>
 
-          <label for="password">
-            Password
-          </label>
 
-          <input
-            type="password"
-            id="password"
-            placeholder="Masukkan password"
-            required
-          >
+
+      <!-- SISWA TERPILIH -->
+
+      <div
+        id="siswaTerpilih"
+        class="selected-student hidden">
+
+        <div>
+
+          <strong id="namaSiswaTerpilih">
+            -
+          </strong>
+
+          <span id="detailSiswaTerpilih">
+            -
+          </span>
 
         </div>
+
 
         <button
-          type="submit"
+          type="button"
+          id="btnGantiSiswa"
+          class="btn-small">
+
+          Ganti
+
+        </button>
+
+      </div>
+
+
+
+      <!-- FORM INPUT -->
+
+      <div id="formPelanggaran"
+           class="hidden">
+
+
+        <!-- TANGGAL -->
+
+        <div class="form-group">
+
+          <label for="tanggalPelanggaran">
+
+            Tanggal
+
+          </label>
+
+          <input
+            type="date"
+            id="tanggalPelanggaran"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- JENIS -->
+
+        <div class="form-group">
+
+          <label for="jenisPelanggaran">
+
+            Jenis Pelanggaran
+
+          </label>
+
+
+          <select
+            id="jenisPelanggaran">
+
+            <option value="">
+              -- Pilih Jenis --
+            </option>
+
+            <option value="ringan">
+              Ringan — Bobot 1
+            </option>
+
+            <option value="sedang">
+              Sedang — Bobot 5
+            </option>
+
+            <option value="berat">
+              Berat — Bobot 10
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- RINCIAN -->
+
+        <div class="form-group">
+
+          <label for="rincianPelanggaran">
+
+            Rincian Pelanggaran
+
+          </label>
+
+
+          <select
+            id="rincianPelanggaran"
+            disabled>
+
+            <option value="">
+
+              Pilih jenis pelanggaran terlebih dahulu
+
+            </option>
+
+          </select>
+
+        </div>
+
+
+
+        <!-- WAKTU -->
+
+        <div class="form-group">
+
+          <label for="waktuPelanggaran">
+
+            Waktu Kejadian
+
+          </label>
+
+
+          <input
+            type="time"
+            id="waktuPelanggaran"
+            required
+          >
+
+        </div>
+
+
+
+        <!-- BOBOT -->
+
+        <div
+          id="bobotBox"
+          class="bobot-box">
+
+          <span>
+            Bobot Pelanggaran
+          </span>
+
+          <strong id="nilaiBobot">
+            0
+          </strong>
+
+        </div>
+
+
+
+        <!-- SIMPAN -->
+
+        <button
+          type="button"
+          id="btnSimpanPelanggaran"
           class="btn-primary">
 
-          Login
+          Simpan Pelanggaran
 
         </button>
 
-      </form>
 
-      <p id="loginError"
-         class="error-message">
+        <p
+          id="statusSimpan"
+          class="status-message">
+
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- RIWAYAT -->
+
+    <div class="dashboard-card">
+
+      <h2>
+        Pelanggaran Terbaru
+      </h2>
+
+
+      <div id="riwayatPelanggaran">
+
+        Memuat data...
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =====================================================
+     DASHBOARD GURU
+===================================================== -->
+
+<section id="guruPage"
+         class="page hidden">
+
+  <div class="dashboard">
+
+    <div class="topbar">
+
+      <div>
+
+        <h1>Guru</h1>
+
+        <p id="guruUserName">
+          -
+        </p>
+
+      </div>
+
+
+      <button
+        id="logoutGuru"
+        class="btn-logout">
+
+        Keluar
+
+      </button>
+
+    </div>
+
+
+    <div class="dashboard-card">
+
+      <h2>
+        Dashboard Guru
+      </h2>
+
+      <p>
+        Rekap dan ranking pelanggaran
+        akan tersedia pada Tahap 4.
       </p>
 
     </div>
 
-  </section>
+  </div>
+
+</section>
 
 
-  <!-- ================= DASHBOARD GDS ================= -->
 
-  <section id="gdsPage"
-           class="page hidden">
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
 
-    <div class="dashboard">
-
-      <div class="topbar">
-
-        <div>
-
-          <h1>Petugas GDS</h1>
-
-          <p id="gdsUserName">
-            -
-          </p>
-
-        </div>
-
-        <button
-          id="logoutGds"
-          class="btn-logout">
-
-          Keluar
-
-        </button>
-
-      </div>
-
-      <div class="dashboard-card">
-
-        <h2>Dashboard Petugas GDS</h2>
-
-        <p>
-          Selamat datang di aplikasi pencatat
-          pelanggaran siswa.
-        </p>
-
-        <div class="menu-placeholder">
-
-          Modul pencatatan pelanggaran
-          akan dibuat pada Tahap 3.
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
+<script
+  type="module"
+  src="app.js">
+</script>
 
 
-  <!-- ================= DASHBOARD GURU ================= -->
+<script>
 
-  <section id="guruPage"
-           class="page hidden">
+if ("serviceWorker" in navigator) {
 
-    <div class="dashboard">
+  window.addEventListener(
+    "load",
+    () => {
 
-      <div class="topbar">
+      navigator.serviceWorker
+        .register("sw.js")
+        .then(() => {
 
-        <div>
+          console.log(
+            "Service Worker aktif"
+          );
 
-          <h1>Guru</h1>
+        })
+        .catch(error => {
 
-          <p id="guruUserName">
-            -
-          </p>
+          console.error(
+            "Service Worker gagal:",
+            error
+          );
 
-        </div>
-
-        <button
-          id="logoutGuru"
-          class="btn-logout">
-
-          Keluar
-
-        </button>
-
-      </div>
-
-      <div class="dashboard-card">
-
-        <h2>Dashboard Guru</h2>
-
-        <p>
-          Selamat datang di dashboard rekap
-          pelanggaran siswa.
-        </p>
-
-        <div class="menu-placeholder">
-
-          Modul ranking pelanggaran
-          akan dibuat pada Tahap 4.
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-
-  <script type="module"
-          src="app.js">
-  </script>
-
-
-  <script>
-
-    if ("serviceWorker" in navigator) {
-
-      window.addEventListener("load", () => {
-
-        navigator.serviceWorker
-          .register("sw.js")
-          .then(() => {
-
-            console.log(
-              "Service Worker aktif"
-            );
-
-          })
-          .catch(error => {
-
-            console.error(
-              "Service Worker gagal:",
-              error
-            );
-
-          });
-
-      });
+        });
 
     }
+  );
 
-  </script>
+}
+
+</script>
+
 
 </body>
 
