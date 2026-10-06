@@ -1738,29 +1738,25 @@ document.addEventListener(
 
 
     // LOGOUT GDS
-    const btnLogoutGDS =
-      el("btnLogoutGDS");
+    const btnLogoutGDS = document.getElementById("logoutGds");
 
-    if (btnLogoutGDS) {
-
-      btnLogoutGDS.addEventListener(
-        "click",
-        prosesLogout
-      );
-    }
+if (btnLogoutGDS) {
+  btnLogoutGDS.addEventListener(
+    "click",
+    prosesLogout
+  );
+}
 
 
     // LOGOUT GURU
-    const btnLogoutGuru =
-      el("btnLogoutGuru");
+    const btnLogoutGuru = document.getElementById("logoutGuru");
 
-    if (btnLogoutGuru) {
-
-      btnLogoutGuru.addEventListener(
-        "click",
-        prosesLogout
-      );
-    }
+if (btnLogoutGuru) {
+  btnLogoutGuru.addEventListener(
+    "click",
+    prosesLogout
+  );
+}
 
 
     // CARI SISWA
