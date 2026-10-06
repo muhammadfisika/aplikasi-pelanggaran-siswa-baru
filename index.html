@@ -537,25 +537,83 @@
 
     <!-- DETAIL -->
 
-    <div
-      id="detailGuru"
-      class="dashboard-card hidden">
+   <div id="detailGuru" style="display:none;">
 
-      <div class="section-header">
+  <div class="card">
 
-        <h2 id="detailNamaSiswa">
-          Detail Siswa
-        </h2>
+    <div class="card-header">
 
-        <button
-          id="btnTutupDetail"
-          class="btn-small">
+      <h3>
+        Detail Pelanggaran Siswa
+      </h3>
 
-          Tutup
+    </div>
 
-        </button>
+    <div class="card-body">
+
+      <h2 id="detailNamaSiswa">
+        -
+      </h2>
+
+      <p id="detailIdentitas">
+        -
+      </p>
+
+
+      <div class="summary-grid">
+
+        <div class="summary-card">
+          <h4>Ringan</h4>
+          <div id="detailRingan">0</div>
+        </div>
+
+        <div class="summary-card">
+          <h4>Sedang</h4>
+          <div id="detailSedang">0</div>
+        </div>
+
+        <div class="summary-card">
+          <h4>Berat</h4>
+          <div id="detailBerat">0</div>
+        </div>
+
+        <div class="summary-card">
+          <h4>Total Bobot</h4>
+          <div id="detailTotalBobot">0</div>
+        </div>
 
       </div>
+
+
+      <hr>
+
+
+      <h3>
+        Daftar Pelanggaran
+      </h3>
+
+      <div id="detailDaftarPelanggaran">
+
+        Belum ada data.
+
+      </div>
+
+
+      <br>
+
+      <button
+        type="button"
+        id="btnTutupDetail"
+        class="btn btn-secondary"
+      >
+        Tutup Detail
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
 
 
       <p id="detailIdentitas">
