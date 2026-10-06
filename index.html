@@ -1,66 +1,236 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
+
   <meta charset="UTF-8">
 
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0">
 
-  <meta name="theme-color" content="#0d6efd">
+  <meta name="theme-color"
+        content="#0d6efd">
 
   <meta name="description"
         content="Aplikasi Pencatat Pelanggaran Siswa">
 
-  <link rel="manifest" href="manifest.json">
+  <link rel="manifest"
+        href="manifest.json">
 
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet"
+        href="style.css">
 
   <title>Pelanggaran Siswa</title>
+
 </head>
 
 <body>
 
-  <main class="container">
+  <!-- ================= LOGIN ================= -->
 
-    <h1>Aplikasi Pelanggaran Siswa</h1>
+  <section id="loginPage"
+           class="page">
 
-    <p>
-      SMAN 2 Rangkasbitung
-    </p>
+    <div class="login-card">
 
-    <div class="card">
+      <h1>Pelanggaran Siswa</h1>
 
-      <h2>Persiapan Aplikasi</h2>
+      <p class="subtitle">
+        SMAN 2 Rangkasbitung
+      </p>
 
-      <p id="statusFirebase">
-        Menghubungkan ke Firebase...
+      <h2>Login</h2>
+
+      <form id="loginForm">
+
+        <div class="form-group">
+
+          <label for="email">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Masukkan email"
+            required
+          >
+
+        </div>
+
+        <div class="form-group">
+
+          <label for="password">
+            Password
+          </label>
+
+          <input
+            type="password"
+            id="password"
+            placeholder="Masukkan password"
+            required
+          >
+
+        </div>
+
+        <button
+          type="submit"
+          class="btn-primary">
+
+          Login
+
+        </button>
+
+      </form>
+
+      <p id="loginError"
+         class="error-message">
       </p>
 
     </div>
 
-  </main>
+  </section>
 
-  <script type="module" src="app.js"></script>
-<script>
-  if ("serviceWorker" in navigator) {
 
-    window.addEventListener("load", () => {
+  <!-- ================= DASHBOARD GDS ================= -->
 
-      navigator.serviceWorker
-        .register("sw.js")
-        .then(() => {
-          console.log("Service Worker aktif");
-        })
-        .catch(error => {
-          console.error(
-            "Service Worker gagal:",
-            error
-          );
-        });
+  <section id="gdsPage"
+           class="page hidden">
 
-    });
+    <div class="dashboard">
 
-  }
-</script>
+      <div class="topbar">
+
+        <div>
+
+          <h1>Petugas GDS</h1>
+
+          <p id="gdsUserName">
+            -
+          </p>
+
+        </div>
+
+        <button
+          id="logoutGds"
+          class="btn-logout">
+
+          Keluar
+
+        </button>
+
+      </div>
+
+      <div class="dashboard-card">
+
+        <h2>Dashboard Petugas GDS</h2>
+
+        <p>
+          Selamat datang di aplikasi pencatat
+          pelanggaran siswa.
+        </p>
+
+        <div class="menu-placeholder">
+
+          Modul pencatatan pelanggaran
+          akan dibuat pada Tahap 3.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <!-- ================= DASHBOARD GURU ================= -->
+
+  <section id="guruPage"
+           class="page hidden">
+
+    <div class="dashboard">
+
+      <div class="topbar">
+
+        <div>
+
+          <h1>Guru</h1>
+
+          <p id="guruUserName">
+            -
+          </p>
+
+        </div>
+
+        <button
+          id="logoutGuru"
+          class="btn-logout">
+
+          Keluar
+
+        </button>
+
+      </div>
+
+      <div class="dashboard-card">
+
+        <h2>Dashboard Guru</h2>
+
+        <p>
+          Selamat datang di dashboard rekap
+          pelanggaran siswa.
+        </p>
+
+        <div class="menu-placeholder">
+
+          Modul ranking pelanggaran
+          akan dibuat pada Tahap 4.
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+  <script type="module"
+          src="app.js">
+  </script>
+
+
+  <script>
+
+    if ("serviceWorker" in navigator) {
+
+      window.addEventListener("load", () => {
+
+        navigator.serviceWorker
+          .register("sw.js")
+          .then(() => {
+
+            console.log(
+              "Service Worker aktif"
+            );
+
+          })
+          .catch(error => {
+
+            console.error(
+              "Service Worker gagal:",
+              error
+            );
+
+          });
+
+      });
+
+    }
+
+  </script>
+
 </body>
+
 </html>
