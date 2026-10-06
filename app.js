@@ -1,15 +1,10 @@
 // =====================================================
-// FIREBASE APP
+// FIREBASE
 // =====================================================
 
 import {
   initializeApp
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
-
-
-// =====================================================
-// AUTH
-// =====================================================
 
 import {
   getAuth,
@@ -18,11 +13,6 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-auth.js";
 
-
-// =====================================================
-// FIRESTORE
-// =====================================================
-
 import {
   getFirestore,
   collection,
@@ -30,10 +20,6 @@ import {
   getDoc,
   doc,
   addDoc,
-  query,
-  where,
-  orderBy,
-  limit,
   serverTimestamp
 } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-firestore.js";
 
@@ -51,8 +37,9 @@ const firebaseConfig = {
   appId: "1:36989542207:web:317a68b9bf624720df3d8a"
 };
 
+
 // =====================================================
-// INITIALIZE FIREBASE
+// INITIALIZE
 // =====================================================
 
 const app =
@@ -104,7 +91,7 @@ const logoutGuru =
 
 
 // =====================================================
-// ELEMENT GDS
+// GDS ELEMENT
 // =====================================================
 
 const cariSiswa =
@@ -160,63 +147,146 @@ const riwayatPelanggaran =
 
 
 // =====================================================
-// DATA PELANGGARAN
+// GURU ELEMENT
+// =====================================================
+
+const filterKelas =
+  document.getElementById("filterKelas");
+
+const filterTanggalAwal =
+  document.getElementById(
+    "filterTanggalAwal"
+  );
+
+const filterTanggalAkhir =
+  document.getElementById(
+    "filterTanggalAkhir"
+  );
+
+const btnTampilkanRekap =
+  document.getElementById(
+    "btnTampilkanRekap"
+  );
+
+const statusRekap =
+  document.getElementById(
+    "statusRekap"
+  );
+
+const totalSiswa =
+  document.getElementById(
+    "totalSiswa"
+  );
+
+const totalRingan =
+  document.getElementById(
+    "totalRingan"
+  );
+
+const totalSedang =
+  document.getElementById(
+    "totalSedang"
+  );
+
+const totalBerat =
+  document.getElementById(
+    "totalBerat"
+  );
+
+const totalBobot =
+  document.getElementById(
+    "totalBobot"
+  );
+
+const jumlahDataRanking =
+  document.getElementById(
+    "jumlahDataRanking"
+  );
+
+const tabelRanking =
+  document.getElementById(
+    "tabelRanking"
+  );
+
+const detailGuru =
+  document.getElementById(
+    "detailGuru"
+  );
+
+const detailNamaSiswa =
+  document.getElementById(
+    "detailNamaSiswa"
+  );
+
+const detailIdentitas =
+  document.getElementById(
+    "detailIdentitas"
+  );
+
+const detailRingan =
+  document.getElementById(
+    "detailRingan"
+  );
+
+const detailSedang =
+  document.getElementById(
+    "detailSedang"
+  );
+
+const detailBerat =
+  document.getElementById(
+    "detailBerat"
+  );
+
+const detailTotalBobot =
+  document.getElementById(
+    "detailTotalBobot"
+  );
+
+const detailDaftarPelanggaran =
+  document.getElementById(
+    "detailDaftarPelanggaran"
+  );
+
+const btnTutupDetail =
+  document.getElementById(
+    "btnTutupDetail"
+  );
+
+
+// =====================================================
+// DATA
 // =====================================================
 
 const daftarPelanggaran = {
 
   ringan: [
-
     "Datang terlambat",
-
     "Atribut seragam tidak lengkap",
-
     "Tidak menggunakan ikat pinggang",
-
     "Tidak menggunakan kaus kaki sesuai ketentuan",
-
     "Rambut tidak sesuai ketentuan",
-
     "Tidak membawa perlengkapan belajar"
-
   ],
-
 
   sedang: [
-
     "Menggunakan HP saat pembelajaran tanpa izin",
-
     "Meninggalkan kelas tanpa izin",
-
     "Mengganggu proses pembelajaran",
-
     "Berkata tidak sopan",
-
     "Tidak mengikuti kegiatan sekolah tanpa alasan"
-
   ],
 
-
   berat: [
-
     "Perundungan",
-
     "Perkelahian",
-
     "Merusak fasilitas sekolah dengan sengaja",
-
     "Membawa barang terlarang",
-
     "Tindakan yang membahayakan warga sekolah"
-
   ]
 
 };
 
-
-// =====================================================
-// BOBOT
-// =====================================================
 
 const bobotPelanggaran = {
 
@@ -229,11 +299,9 @@ const bobotPelanggaran = {
 };
 
 
-// =====================================================
-// DATA SEMENTARA
-// =====================================================
-
 let semuaSiswa = [];
+
+let semuaPelanggaran = [];
 
 let siswaDipilih = null;
 
@@ -264,29 +332,29 @@ function showLogin() {
 }
 
 
-function showGds(userData) {
+function showGds(data) {
 
   hideAllPages();
 
   gdsPage.classList.remove("hidden");
 
   gdsUserName.textContent =
-    userData.nama ||
-    userData.email ||
+    data.nama ||
+    data.email ||
     "Petugas GDS";
 
 }
 
 
-function showGuru(userData) {
+function showGuru(data) {
 
   hideAllPages();
 
   guruPage.classList.remove("hidden");
 
   guruUserName.textContent =
-    userData.nama ||
-    userData.email ||
+    data.nama ||
+    data.email ||
     "Guru";
 
 }
@@ -298,7 +366,7 @@ function showGuru(userData) {
 
 loginForm.addEventListener(
   "submit",
-  async function(event) {
+  async event => {
 
     event.preventDefault();
 
@@ -309,16 +377,6 @@ loginForm.addEventListener(
 
     const password =
       passwordInput.value;
-
-
-    if (!email || !password) {
-
-      loginError.textContent =
-        "Email dan password wajib diisi.";
-
-      return;
-
-    }
 
 
     try {
@@ -334,55 +392,11 @@ loginForm.addEventListener(
     catch (error) {
 
       console.error(
-        "Login error:",
         error
       );
 
-      let message =
-        "Login gagal.";
-
-      if (
-        error.code ===
-        "auth/invalid-credential"
-      ) {
-
-        message =
-          "Email atau password salah.";
-
-      }
-
-      else if (
-        error.code ===
-        "auth/user-not-found"
-      ) {
-
-        message =
-          "Akun tidak ditemukan.";
-
-      }
-
-      else if (
-        error.code ===
-        "auth/wrong-password"
-      ) {
-
-        message =
-          "Password salah.";
-
-      }
-
-      else if (
-        error.code ===
-        "auth/invalid-email"
-      ) {
-
-        message =
-          "Format email tidak valid.";
-
-      }
-
       loginError.textContent =
-        message;
+        "Email atau password salah.";
 
     }
 
@@ -396,7 +410,7 @@ loginForm.addEventListener(
 
 onAuthStateChanged(
   auth,
-  async function(user) {
+  async user => {
 
     if (!user) {
 
@@ -411,16 +425,14 @@ onAuthStateChanged(
 
     try {
 
-      const userRef =
-        doc(
-          db,
-          "users",
-          user.uid
-        );
-
-
       const userSnap =
-        await getDoc(userRef);
+        await getDoc(
+          doc(
+            db,
+            "users",
+            user.uid
+          )
+        );
 
 
       if (!userSnap.exists()) {
@@ -440,20 +452,17 @@ onAuthStateChanged(
       currentUserData =
         userSnap.data();
 
-
       currentUserData.uid =
         user.uid;
 
 
       if (
-        currentUserData.role ===
-        "gds"
+        currentUserData.role === "gds"
       ) {
 
         showGds(
           currentUserData
         );
-
 
         await loadSemuaSiswa();
 
@@ -467,13 +476,14 @@ onAuthStateChanged(
 
 
       if (
-        currentUserData.role ===
-        "guru"
+        currentUserData.role === "guru"
       ) {
 
         showGuru(
           currentUserData
         );
+
+        await loadDataGuru();
 
         return;
 
@@ -482,9 +492,6 @@ onAuthStateChanged(
 
       await signOut(auth);
 
-      loginError.textContent =
-        "Role pengguna tidak dikenali.";
-
       showLogin();
 
     }
@@ -492,14 +499,10 @@ onAuthStateChanged(
     catch (error) {
 
       console.error(
-        "Gagal membaca user:",
         error
       );
 
       await signOut(auth);
-
-      loginError.textContent =
-        "Gagal membaca data pengguna.";
 
       showLogin();
 
@@ -510,26 +513,19 @@ onAuthStateChanged(
 
 
 // =====================================================
-// LOAD SEMUA SISWA
+// LOAD SISWA
 // =====================================================
 
 async function loadSemuaSiswa() {
 
   try {
 
-    hasilPencarian.innerHTML =
-      "";
-
-    const siswaRef =
-      collection(
-        db,
-        "siswa"
-      );
-
-
     const snapshot =
       await getDocs(
-        siswaRef
+        collection(
+          db,
+          "siswa"
+        )
       );
 
 
@@ -537,16 +533,16 @@ async function loadSemuaSiswa() {
 
 
     snapshot.forEach(
-      docSnapshot => {
+      item => {
 
         const data =
-          docSnapshot.data();
+          item.data();
 
 
         semuaSiswa.push({
 
           id:
-            docSnapshot.id,
+            item.id,
 
           nama:
             data.nama || "",
@@ -571,26 +567,13 @@ async function loadSemuaSiswa() {
         )
     );
 
-
-    console.log(
-      "Jumlah siswa:",
-      semuaSiswa.length
-    );
-
   }
 
   catch (error) {
 
     console.error(
-      "Gagal mengambil siswa:",
       error
     );
-
-    hasilPencarian.innerHTML =
-
-      `<div class="search-item">
-        Gagal mengambil data siswa.
-      </div>`;
 
   }
 
@@ -598,12 +581,12 @@ async function loadSemuaSiswa() {
 
 
 // =====================================================
-// PENCARIAN SISWA
+// SEARCH SISWA
 // =====================================================
 
 cariSiswa.addEventListener(
   "input",
-  function() {
+  () => {
 
     const keyword =
       cariSiswa.value
@@ -616,40 +599,28 @@ cariSiswa.addEventListener(
 
 
     if (!keyword) {
-
       return;
-
     }
 
 
     const hasil =
       semuaSiswa
-        .filter(siswa => {
-
-          return (
-
+        .filter(
+          siswa =>
             siswa.nama
               .toLowerCase()
               .includes(keyword)
-
             ||
-
             siswa.nisn
               .toLowerCase()
               .includes(keyword)
-
-          );
-
-        })
+        )
         .slice(0, 20);
 
 
-    if (
-      hasil.length === 0
-    ) {
+    if (!hasil.length) {
 
       hasilPencarian.innerHTML =
-
         `<div class="search-item">
           Siswa tidak ditemukan.
         </div>`;
@@ -673,17 +644,15 @@ cariSiswa.addEventListener(
 
 
         item.innerHTML = `
-
           <strong>
             ${escapeHtml(siswa.nama)}
           </strong>
 
           <span>
             ${escapeHtml(siswa.nisn)}
-            ·
-            Kelas ${escapeHtml(siswa.kelas)}
+            · Kelas
+            ${escapeHtml(siswa.kelas)}
           </span>
-
         `;
 
 
@@ -719,7 +688,6 @@ function pilihSiswa(siswa) {
 
 
   detailSiswaTerpilih.textContent =
-
     `NISN ${siswa.nisn} · Kelas ${siswa.kelas}`;
 
 
@@ -736,7 +704,6 @@ function pilihSiswa(siswa) {
   cariSiswa.value =
     "";
 
-
   hasilPencarian.innerHTML =
     "";
 
@@ -749,7 +716,7 @@ function pilihSiswa(siswa) {
 
 btnGantiSiswa.addEventListener(
   "click",
-  function() {
+  () => {
 
     siswaDipilih = null;
 
@@ -761,21 +728,17 @@ btnGantiSiswa.addEventListener(
       "hidden"
     );
 
-    resetFormPelanggaran();
-
-    cariSiswa.focus();
-
   }
 );
 
 
 // =====================================================
-// JENIS PELANGGARAN BERUBAH
+// JENIS PELANGGARAN
 // =====================================================
 
 jenisPelanggaran.addEventListener(
   "change",
-  function() {
+  () => {
 
     const jenis =
       jenisPelanggaran.value;
@@ -794,11 +757,9 @@ jenisPelanggaran.addEventListener(
       rincianPelanggaran.disabled =
         true;
 
-
       rincianPelanggaran.innerHTML =
-
-        `<option value="">
-          Pilih jenis pelanggaran terlebih dahulu
+        `<option>
+          Pilih jenis terlebih dahulu
         </option>`;
 
       return;
@@ -811,9 +772,8 @@ jenisPelanggaran.addEventListener(
 
 
     rincianPelanggaran.innerHTML =
-
       `<option value="">
-        -- Pilih Rincian Pelanggaran --
+        -- Pilih Rincian --
       </option>`;
 
 
@@ -826,18 +786,14 @@ jenisPelanggaran.addEventListener(
               "option"
             );
 
-
           option.value =
             rincian;
 
           option.textContent =
             rincian;
 
-
           rincianPelanggaran
-            .appendChild(
-              option
-            );
+            .appendChild(option);
 
         }
       );
@@ -852,14 +808,7 @@ jenisPelanggaran.addEventListener(
 
 btnSimpanPelanggaran.addEventListener(
   "click",
-  async function() {
-
-    statusSimpan.textContent =
-      "";
-
-    statusSimpan.className =
-      "status-message";
-
+  async () => {
 
     if (!siswaDipilih) {
 
@@ -886,46 +835,15 @@ btnSimpanPelanggaran.addEventListener(
       waktuPelanggaran.value;
 
 
-    if (!tanggal) {
+    if (
+      !tanggal ||
+      !jenis ||
+      !rincian ||
+      !waktu
+    ) {
 
       tampilkanStatus(
-        "Tanggal wajib diisi.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if (!jenis) {
-
-      tampilkanStatus(
-        "Jenis pelanggaran wajib dipilih.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if (!rincian) {
-
-      tampilkanStatus(
-        "Rincian pelanggaran wajib dipilih.",
-        "error"
-      );
-
-      return;
-
-    }
-
-
-    if (!waktu) {
-
-      tampilkanStatus(
-        "Waktu kejadian wajib diisi.",
+        "Lengkapi semua data.",
         "error"
       );
 
@@ -967,20 +885,15 @@ btnSimpanPelanggaran.addEventListener(
           kelas:
             siswaDipilih.kelas,
 
-          tanggal:
-            tanggal,
+          tanggal,
 
-          waktu:
-            waktu,
+          waktu,
 
-          jenis:
-            jenis,
+          jenis,
 
-          rincian:
-            rincian,
+          rincian,
 
-          bobot:
-            bobot,
+          bobot,
 
           petugasId:
             currentUserData.uid,
@@ -1002,9 +915,6 @@ btnSimpanPelanggaran.addEventListener(
       );
 
 
-      resetFormPelanggaran();
-
-
       await loadRiwayatPelanggaran();
 
     }
@@ -1012,13 +922,11 @@ btnSimpanPelanggaran.addEventListener(
     catch (error) {
 
       console.error(
-        "Gagal menyimpan:",
         error
       );
 
-
       tampilkanStatus(
-        "Gagal menyimpan data pelanggaran.",
+        "Gagal menyimpan pelanggaran.",
         "error"
       );
 
@@ -1039,123 +947,53 @@ btnSimpanPelanggaran.addEventListener(
 
 
 // =====================================================
-// RESET FORM
-// =====================================================
-
-function resetFormPelanggaran() {
-
-  jenisPelanggaran.value =
-    "";
-
-  rincianPelanggaran.innerHTML =
-
-    `<option value="">
-      Pilih jenis pelanggaran terlebih dahulu
-    </option>`;
-
-  rincianPelanggaran.disabled =
-    true;
-
-  waktuPelanggaran.value =
-    "";
-
-  nilaiBobot.textContent =
-    "0";
-
-}
-
-
-// =====================================================
-// TANGGAL & WAKTU DEFAULT
-// =====================================================
-
-function setTanggalDanWaktuDefault() {
-
-  const sekarang =
-    new Date();
-
-
-  const tahun =
-    sekarang.getFullYear();
-
-
-  const bulan =
-    String(
-      sekarang.getMonth() + 1
-    ).padStart(2, "0");
-
-
-  const hari =
-    String(
-      sekarang.getDate()
-    ).padStart(2, "0");
-
-
-  tanggalPelanggaran.value =
-    `${tahun}-${bulan}-${hari}`;
-
-
-  const jam =
-    String(
-      sekarang.getHours()
-    ).padStart(2, "0");
-
-
-  const menit =
-    String(
-      sekarang.getMinutes()
-    ).padStart(2, "0");
-
-
-  waktuPelanggaran.value =
-    `${jam}:${menit}`;
-
-}
-
-
-// =====================================================
-// RIWAYAT PELANGGARAN
+// RIWAYAT GDS
 // =====================================================
 
 async function loadRiwayatPelanggaran() {
 
-  riwayatPelanggaran.innerHTML =
-    "Memuat data...";
-
-
   try {
 
-    const q =
-      query(
-
+    const snapshot =
+      await getDocs(
         collection(
           db,
           "pelanggaran"
-        ),
-
-        orderBy(
-          "createdAt",
-          "desc"
-        ),
-
-        limit(10)
-
+        )
       );
 
 
-    const snapshot =
-      await getDocs(q);
+    const data = [];
 
 
-    if (
-      snapshot.empty
-    ) {
+    snapshot.forEach(
+      item => {
+
+        data.push({
+          id: item.id,
+          ...item.data()
+        });
+
+      }
+    );
+
+
+    data.sort(
+      (a, b) =>
+        getTanggalUrut(b)
+        -
+        getTanggalUrut(a)
+    );
+
+
+    const dataTerbaru =
+      data.slice(0, 10);
+
+
+    if (!dataTerbaru.length) {
 
       riwayatPelanggaran.innerHTML =
-
-        `<p>
-          Belum ada data pelanggaran.
-        </p>`;
+        "<p>Belum ada data.</p>";
 
       return;
 
@@ -1166,12 +1004,8 @@ async function loadRiwayatPelanggaran() {
       "";
 
 
-    snapshot.forEach(
-      docSnapshot => {
-
-        const data =
-          docSnapshot.data();
-
+    dataTerbaru.forEach(
+      data => {
 
         const item =
           document.createElement(
@@ -1187,7 +1021,7 @@ async function loadRiwayatPelanggaran() {
 
           <strong>
             ${escapeHtml(
-              data.namaSiswa || "-"
+              data.namaSiswa
             )}
           </strong>
 
@@ -1195,46 +1029,42 @@ async function loadRiwayatPelanggaran() {
 
             Kelas:
             ${escapeHtml(
-              data.kelas || "-"
+              data.kelas
             )}
 
             <br>
 
             ${escapeHtml(
-              data.tanggal || "-"
+              data.tanggal
             )}
             ·
             ${escapeHtml(
-              data.waktu || "-"
+              data.waktu
             )}
 
             <br>
 
             <span class="badge
               badge-${escapeHtml(
-                data.jenis || "ringan"
+                data.jenis
               )}">
 
               ${escapeHtml(
-                (data.jenis || "")
-                  .toUpperCase()
-              )}
+                data.jenis
+              ).toUpperCase()}
 
             </span>
 
             Bobot:
-            ${Number(
-              data.bobot || 0
-            )}
+            ${Number(data.bobot || 0)}
 
             <br>
 
             ${escapeHtml(
-              data.rincian || "-"
+              data.rincian
             )}
 
           </div>
-
         `;
 
 
@@ -1249,16 +1079,866 @@ async function loadRiwayatPelanggaran() {
   catch (error) {
 
     console.error(
-      "Gagal memuat riwayat:",
       error
     );
 
-
     riwayatPelanggaran.innerHTML =
+      "<p>Gagal memuat data.</p>";
 
-      `<p>
-        Data riwayat belum dapat dimuat.
-      </p>`;
+  }
+
+}
+
+
+// =====================================================
+// GURU - LOAD DATA
+// =====================================================
+
+async function loadDataGuru() {
+
+  try {
+
+    statusRekap.textContent =
+      "Memuat data...";
+
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "pelanggaran"
+        )
+      );
+
+
+    semuaPelanggaran = [];
+
+
+    snapshot.forEach(
+      item => {
+
+        semuaPelanggaran.push({
+
+          id:
+            item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
+
+
+    isiFilterKelas();
+
+    tampilkanRanking();
+
+
+    statusRekap.textContent =
+      "";
+
+  }
+
+  catch (error) {
+
+    console.error(
+      error
+    );
+
+    statusRekap.textContent =
+      "Gagal mengambil data pelanggaran.";
+
+    statusRekap.className =
+      "status-message status-error";
+
+  }
+
+}
+
+
+// =====================================================
+// FILTER KELAS
+// =====================================================
+
+function isiFilterKelas() {
+
+  const kelasSet =
+    new Set();
+
+
+  semuaPelanggaran.forEach(
+    data => {
+
+      if (data.kelas) {
+
+        kelasSet.add(
+          data.kelas
+        );
+
+      }
+
+    }
+  );
+
+
+  const kelasArray =
+    Array.from(kelasSet)
+      .sort(
+        (a, b) =>
+          a.localeCompare(
+            b,
+            "id"
+          )
+      );
+
+
+  filterKelas.innerHTML =
+    `<option value="">
+      Semua Kelas
+    </option>`;
+
+
+  kelasArray.forEach(
+    kelas => {
+
+      const option =
+        document.createElement(
+          "option"
+        );
+
+      option.value =
+        kelas;
+
+      option.textContent =
+        kelas;
+
+      filterKelas.appendChild(
+        option
+      );
+
+    }
+  );
+
+}
+
+
+// =====================================================
+// TAMPILKAN RANKING
+// =====================================================
+
+function tampilkanRanking() {
+
+  const dataFilter =
+    ambilDataTerfilter();
+
+
+  const ranking =
+    buatRanking(
+      dataFilter
+    );
+
+
+  updateRingkasan(
+    dataFilter,
+    ranking
+  );
+
+
+  renderRanking(
+    ranking
+  );
+
+}
+
+
+// =====================================================
+// AMBIL DATA FILTER
+// =====================================================
+
+function ambilDataTerfilter() {
+
+  const kelas =
+    filterKelas.value;
+
+  const tanggalAwal =
+    filterTanggalAwal.value;
+
+  const tanggalAkhir =
+    filterTanggalAkhir.value;
+
+
+  return semuaPelanggaran
+    .filter(
+      data => {
+
+        if (
+          kelas &&
+          data.kelas !== kelas
+        ) {
+
+          return false;
+
+        }
+
+
+        if (
+          tanggalAwal &&
+          data.tanggal < tanggalAwal
+        ) {
+
+          return false;
+
+        }
+
+
+        if (
+          tanggalAkhir &&
+          data.tanggal > tanggalAkhir
+        ) {
+
+          return false;
+
+        }
+
+
+        return true;
+
+      }
+    );
+
+}
+
+
+// =====================================================
+// BUAT RANKING
+// =====================================================
+
+function buatRanking(data) {
+
+  const map =
+    new Map();
+
+
+  data.forEach(
+    item => {
+
+      const key =
+        item.siswaId ||
+        `${item.nisn}_${item.namaSiswa}`;
+
+
+      if (!map.has(key)) {
+
+        map.set(
+          key,
+          {
+
+            siswaId:
+              item.siswaId || "",
+
+            namaSiswa:
+              item.namaSiswa || "",
+
+            nisn:
+              item.nisn || "",
+
+            kelas:
+              item.kelas || "",
+
+            ringan: 0,
+
+            sedang: 0,
+
+            berat: 0,
+
+            totalBobot: 0,
+
+            detail: []
+
+          }
+        );
+
+      }
+
+
+      const siswa =
+        map.get(key);
+
+
+      const jenis =
+        item.jenis;
+
+
+      if (
+        jenis === "ringan"
+      ) {
+
+        siswa.ringan++;
+
+      }
+
+      else if (
+        jenis === "sedang"
+      ) {
+
+        siswa.sedang++;
+
+      }
+
+      else if (
+        jenis === "berat"
+      ) {
+
+        siswa.berat++;
+
+      }
+
+
+      siswa.totalBobot +=
+        Number(
+          item.bobot || 0
+        );
+
+
+      siswa.detail.push(
+        item
+      );
+
+    }
+  );
+
+
+  const hasil =
+    Array.from(
+      map.values()
+    );
+
+
+  hasil.forEach(
+    siswa => {
+
+      siswa.detail.sort(
+        (a, b) =>
+          getTanggalUrut(b)
+          -
+          getTanggalUrut(a)
+      );
+
+    }
+  );
+
+
+  hasil.sort(
+    (a, b) => {
+
+      if (
+        b.totalBobot !==
+        a.totalBobot
+      ) {
+
+        return (
+          b.totalBobot
+          -
+          a.totalBobot
+        );
+
+      }
+
+
+      return a.namaSiswa
+        .localeCompare(
+          b.namaSiswa,
+          "id"
+        );
+
+    }
+  );
+
+
+  hasil.forEach(
+    (siswa, index) => {
+
+      siswa.ranking =
+        index + 1;
+
+    }
+  );
+
+
+  return hasil;
+
+}
+
+
+// =====================================================
+// RINGKASAN
+// =====================================================
+
+function updateRingkasan(
+  data,
+  ranking
+) {
+
+  let ringan = 0;
+
+  let sedang = 0;
+
+  let berat = 0;
+
+  let bobot = 0;
+
+
+  data.forEach(
+    item => {
+
+      if (
+        item.jenis === "ringan"
+      ) {
+
+        ringan++;
+
+      }
+
+      if (
+        item.jenis === "sedang"
+      ) {
+
+        sedang++;
+
+      }
+
+      if (
+        item.jenis === "berat"
+      ) {
+
+        berat++;
+
+      }
+
+
+      bobot +=
+        Number(
+          item.bobot || 0
+        );
+
+    }
+  );
+
+
+  totalSiswa.textContent =
+    ranking.length;
+
+  totalRingan.textContent =
+    ringan;
+
+  totalSedang.textContent =
+    sedang;
+
+  totalBerat.textContent =
+    berat;
+
+  totalBobot.textContent =
+    bobot;
+
+  jumlahDataRanking.textContent =
+    `${ranking.length} siswa`;
+
+}
+
+
+// =====================================================
+// RENDER RANKING
+// =====================================================
+
+function renderRanking(
+  ranking
+) {
+
+  if (!ranking.length) {
+
+    tabelRanking.innerHTML =
+
+      `<div class="empty-data">
+        Tidak ada data pelanggaran
+        sesuai filter.
+      </div>`;
+
+    return;
+
+  }
+
+
+  let html = `
+
+    <table class="ranking-table">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Ranking
+          </th>
+
+          <th>
+            Nama Siswa
+          </th>
+
+          <th>
+            Kelas
+          </th>
+
+          <th>
+            Ringan
+          </th>
+
+          <th>
+            Sedang
+          </th>
+
+          <th>
+            Berat
+          </th>
+
+          <th>
+            Total Bobot
+          </th>
+
+        </tr>
+
+      </thead>
+
+      <tbody>
+  `;
+
+
+  ranking.forEach(
+    siswa => {
+
+      html += `
+
+        <tr>
+
+          <td>
+            <span class="rank-number">
+              ${siswa.ranking}
+            </span>
+          </td>
+
+          <td>
+
+            <span
+              class="student-name"
+              data-siswa-id="${escapeHtml(
+                siswa.siswaId
+              )}">
+
+              ${escapeHtml(
+                siswa.namaSiswa
+              )}
+
+            </span>
+
+          </td>
+
+          <td>
+            ${escapeHtml(
+              siswa.kelas
+            )}
+          </td>
+
+          <td>
+            ${siswa.ringan}
+          </td>
+
+          <td>
+            ${siswa.sedang}
+          </td>
+
+          <td>
+            ${siswa.berat}
+          </td>
+
+          <td>
+
+            <span class="total-score">
+
+              ${siswa.totalBobot}
+
+            </span>
+
+          </td>
+
+        </tr>
+
+      `;
+
+    }
+  );
+
+
+  html += `
+
+      </tbody>
+
+    </table>
+
+  `;
+
+
+  tabelRanking.innerHTML =
+    html;
+
+
+  document
+    .querySelectorAll(
+      ".student-name"
+    )
+    .forEach(
+      element => {
+
+        element.addEventListener(
+          "click",
+          () => {
+
+            const id =
+              element.dataset.siswaId;
+
+
+            const siswa =
+              ranking.find(
+                item =>
+                  item.siswaId === id
+              );
+
+
+            if (siswa) {
+
+              tampilkanDetailSiswa(
+                siswa
+              );
+
+            }
+
+          }
+        );
+
+      }
+    );
+
+}
+
+
+// =====================================================
+// DETAIL SISWA
+// =====================================================
+
+function tampilkanDetailSiswa(
+  siswa
+) {
+
+  detailGuru.classList.remove(
+    "hidden"
+  );
+
+
+  detailNamaSiswa.textContent =
+    siswa.namaSiswa;
+
+
+  detailIdentitas.textContent =
+    `NISN ${siswa.nisn} · Kelas ${siswa.kelas}`;
+
+
+  detailRingan.textContent =
+    siswa.ringan;
+
+  detailSedang.textContent =
+    siswa.sedang;
+
+  detailBerat.textContent =
+    siswa.berat;
+
+  detailTotalBobot.textContent =
+    siswa.totalBobot;
+
+
+  detailDaftarPelanggaran
+    .innerHTML = "";
+
+
+  if (!siswa.detail.length) {
+
+    detailDaftarPelanggaran.innerHTML =
+      "<p>Tidak ada detail.</p>";
+
+    return;
+
+  }
+
+
+  siswa.detail.forEach(
+    item => {
+
+      const div =
+        document.createElement(
+          "div"
+        );
+
+
+      div.className =
+        "detail-item";
+
+
+      div.innerHTML = `
+
+        <strong>
+
+          ${escapeHtml(
+            item.rincian || "-"
+          )}
+
+        </strong>
+
+
+        <small>
+
+          ${escapeHtml(
+            item.tanggal || "-"
+          )}
+
+          ·
+
+          ${escapeHtml(
+            item.waktu || "-"
+          )}
+
+          ·
+
+          ${escapeHtml(
+            item.jenis || "-"
+          ).toUpperCase()}
+
+          · Bobot
+
+          ${Number(
+            item.bobot || 0
+          )}
+
+        </small>
+
+      `;
+
+
+      detailDaftarPelanggaran
+        .appendChild(div);
+
+    }
+  );
+
+
+  detailGuru.scrollIntoView({
+    behavior: "smooth"
+  });
+
+}
+
+
+// =====================================================
+// FILTER BUTTON
+// =====================================================
+
+btnTampilkanRekap.addEventListener(
+  "click",
+  () => {
+
+    const awal =
+      filterTanggalAwal.value;
+
+    const akhir =
+      filterTanggalAkhir.value;
+
+
+    if (
+      awal &&
+      akhir &&
+      awal > akhir
+    ) {
+
+      statusRekap.textContent =
+        "Tanggal awal tidak boleh lebih besar dari tanggal akhir.";
+
+      statusRekap.className =
+        "status-message status-error";
+
+      return;
+
+    }
+
+
+    statusRekap.textContent =
+      "";
+
+
+    tampilkanRanking();
+
+  }
+);
+
+
+// =====================================================
+// CLOSE DETAIL
+// =====================================================
+
+btnTutupDetail.addEventListener(
+  "click",
+  () => {
+
+    detailGuru.classList.add(
+      "hidden"
+    );
+
+  }
+);
+
+
+// =====================================================
+// DEFAULT DATE
+// =====================================================
+
+function setTanggalDanWaktuDefault() {
+
+  const now =
+    new Date();
+
+
+  const tanggal =
+    now.toISOString()
+      .slice(0, 10);
+
+
+  const waktu =
+    now.toTimeString()
+      .slice(0, 5);
+
+
+  if (
+    tanggalPelanggaran
+  ) {
+
+    tanggalPelanggaran.value =
+      tanggal;
+
+  }
+
+
+  if (
+    waktuPelanggaran
+  ) {
+
+    waktuPelanggaran.value =
+      waktu;
 
   }
 
@@ -1277,12 +1957,13 @@ function tampilkanStatus(
   statusSimpan.textContent =
     pesan;
 
-
   statusSimpan.className =
     "status-message";
 
 
-  if (tipe === "success") {
+  if (
+    tipe === "success"
+  ) {
 
     statusSimpan.classList.add(
       "status-success"
@@ -1291,7 +1972,9 @@ function tampilkanStatus(
   }
 
 
-  if (tipe === "error") {
+  if (
+    tipe === "error"
+  ) {
 
     statusSimpan.classList.add(
       "status-error"
@@ -1303,10 +1986,34 @@ function tampilkanStatus(
 
 
 // =====================================================
+// TANGGAL URUT
+// =====================================================
+
+function getTanggalUrut(
+  data
+) {
+
+  const tanggal =
+    data.tanggal || "1970-01-01";
+
+  const waktu =
+    data.waktu || "00:00";
+
+
+  return new Date(
+    `${tanggal}T${waktu}:00`
+  ).getTime();
+
+}
+
+
+// =====================================================
 // ESCAPE HTML
 // =====================================================
 
-function escapeHtml(value) {
+function escapeHtml(
+  value
+) {
 
   const div =
     document.createElement(
@@ -1315,7 +2022,9 @@ function escapeHtml(value) {
 
 
   div.textContent =
-    String(value ?? "");
+    String(
+      value ?? ""
+    );
 
 
   return div.innerHTML;
@@ -1324,54 +2033,24 @@ function escapeHtml(value) {
 
 
 // =====================================================
-// LOGOUT GDS
+// LOGOUT
 // =====================================================
 
 logoutGds.addEventListener(
   "click",
-  async function() {
+  async () => {
 
-    try {
-
-      await signOut(auth);
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "Logout error:",
-        error
-      );
-
-    }
+    await signOut(auth);
 
   }
 );
 
 
-// =====================================================
-// LOGOUT GURU
-// =====================================================
-
 logoutGuru.addEventListener(
   "click",
-  async function() {
+  async () => {
 
-    try {
-
-      await signOut(auth);
-
-    }
-
-    catch (error) {
-
-      console.error(
-        "Logout error:",
-        error
-      );
-
-    }
+    await signOut(auth);
 
   }
 );
