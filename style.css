@@ -529,3 +529,62 @@ button {
   }
 
 }
+
+/* =========================================
+   DETAIL PELANGGARAN GURU
+   ========================================= */
+
+.violation-detail-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  padding: 15px;
+  margin-bottom: 12px;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+}
+
+
+.detail-action {
+  flex-shrink: 0;
+}
+
+
+.btn-danger {
+  background: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 9px 15px;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+
+.btn-danger:hover {
+  background: #bb2d3b;
+}
+
+
+.btn-danger:active {
+  transform: scale(0.98);
+}
+
+
+@media (max-width: 600px) {
+
+  .violation-detail-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .detail-action {
+    width: 100%;
+  }
+
+  .detail-action .btn-danger {
+    width: 100%;
+  }
+
+}
