@@ -56,8 +56,7 @@
           type="email"
           id="email"
           placeholder="Masukkan email"
-          required
-        >
+          required>
 
       </div>
 
@@ -72,8 +71,7 @@
           type="password"
           id="password"
           placeholder="Masukkan password"
-          required
-        >
+          required>
 
       </div>
 
@@ -108,9 +106,6 @@
 
   <div class="dashboard">
 
-
-    <!-- TOPBAR -->
-
     <div class="topbar">
 
       <div>
@@ -123,7 +118,6 @@
 
       </div>
 
-
       <button
         id="logoutGds"
         class="btn-logout">
@@ -135,9 +129,6 @@
     </div>
 
 
-
-    <!-- FORM PELANGGARAN -->
-
     <div class="dashboard-card">
 
       <h2>
@@ -145,36 +136,25 @@
       </h2>
 
 
-      <!-- CARI SISWA -->
-
       <div class="form-group">
 
         <label for="cariSiswa">
-
           Cari Nama Siswa
-
         </label>
-
 
         <input
           type="text"
           id="cariSiswa"
           placeholder="Ketik nama siswa..."
-          autocomplete="off"
-        >
-
+          autocomplete="off">
 
         <div
           id="hasilPencarian"
           class="search-results">
-
         </div>
 
       </div>
 
-
-
-      <!-- SISWA TERPILIH -->
 
       <div
         id="siswaTerpilih"
@@ -192,7 +172,6 @@
 
         </div>
 
-
         <button
           type="button"
           id="btnGantiSiswa"
@@ -205,46 +184,32 @@
       </div>
 
 
+      <div
+        id="formPelanggaran"
+        class="hidden">
 
-      <!-- FORM INPUT -->
-
-      <div id="formPelanggaran"
-           class="hidden">
-
-
-        <!-- TANGGAL -->
 
         <div class="form-group">
 
           <label for="tanggalPelanggaran">
-
             Tanggal
-
           </label>
 
           <input
             type="date"
             id="tanggalPelanggaran"
-            required
-          >
+            required>
 
         </div>
 
 
-
-        <!-- JENIS -->
-
         <div class="form-group">
 
           <label for="jenisPelanggaran">
-
             Jenis Pelanggaran
-
           </label>
 
-
-          <select
-            id="jenisPelanggaran">
+          <select id="jenisPelanggaran">
 
             <option value="">
               -- Pilih Jenis --
@@ -267,26 +232,18 @@
         </div>
 
 
-
-        <!-- RINCIAN -->
-
         <div class="form-group">
 
           <label for="rincianPelanggaran">
-
             Rincian Pelanggaran
-
           </label>
-
 
           <select
             id="rincianPelanggaran"
             disabled>
 
             <option value="">
-
-              Pilih jenis pelanggaran terlebih dahulu
-
+              Pilih jenis terlebih dahulu
             </option>
 
           </select>
@@ -294,33 +251,21 @@
         </div>
 
 
-
-        <!-- WAKTU -->
-
         <div class="form-group">
 
           <label for="waktuPelanggaran">
-
             Waktu Kejadian
-
           </label>
-
 
           <input
             type="time"
             id="waktuPelanggaran"
-            required
-          >
+            required>
 
         </div>
 
 
-
-        <!-- BOBOT -->
-
-        <div
-          id="bobotBox"
-          class="bobot-box">
+        <div class="bobot-box">
 
           <span>
             Bobot Pelanggaran
@@ -332,9 +277,6 @@
 
         </div>
 
-
-
-        <!-- SIMPAN -->
 
         <button
           type="button"
@@ -349,7 +291,6 @@
         <p
           id="statusSimpan"
           class="status-message">
-
         </p>
 
       </div>
@@ -357,24 +298,17 @@
     </div>
 
 
-
-    <!-- RIWAYAT -->
-
     <div class="dashboard-card">
 
       <h2>
         Pelanggaran Terbaru
       </h2>
 
-
       <div id="riwayatPelanggaran">
-
         Memuat data...
-
       </div>
 
     </div>
-
 
   </div>
 
@@ -391,11 +325,16 @@
 
   <div class="dashboard">
 
+
+    <!-- HEADER -->
+
     <div class="topbar">
 
       <div>
 
-        <h1>Guru</h1>
+        <h1>
+          Dashboard Guru
+        </h1>
 
         <p id="guruUserName">
           -
@@ -415,16 +354,251 @@
     </div>
 
 
+
+    <!-- FILTER -->
+
     <div class="dashboard-card">
 
       <h2>
-        Dashboard Guru
+        Rekap & Ranking Pelanggaran
       </h2>
 
-      <p>
-        Rekap dan ranking pelanggaran
-        akan tersedia pada Tahap 4.
+
+      <div class="filter-grid">
+
+
+        <div class="form-group">
+
+          <label for="filterKelas">
+            Kelas
+          </label>
+
+          <select id="filterKelas">
+
+            <option value="">
+              Semua Kelas
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="filterTanggalAwal">
+            Dari Tanggal
+          </label>
+
+          <input
+            type="date"
+            id="filterTanggalAwal">
+
+        </div>
+
+
+        <div class="form-group">
+
+          <label for="filterTanggalAkhir">
+            Sampai Tanggal
+          </label>
+
+          <input
+            type="date"
+            id="filterTanggalAkhir">
+
+        </div>
+
+      </div>
+
+
+      <button
+        id="btnTampilkanRekap"
+        class="btn-primary">
+
+        Tampilkan Rekap
+
+      </button>
+
+
+      <p
+        id="statusRekap"
+        class="status-message">
       </p>
+
+    </div>
+
+
+
+    <!-- RINGKASAN -->
+
+    <div
+      id="ringkasanGuru"
+      class="summary-grid">
+
+
+      <div class="summary-card">
+
+        <span>
+          Siswa Melanggar
+        </span>
+
+        <strong id="totalSiswa">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <span>
+          Pelanggaran Ringan
+        </span>
+
+        <strong id="totalRingan">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <span>
+          Pelanggaran Sedang
+        </span>
+
+        <strong id="totalSedang">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <span>
+          Pelanggaran Berat
+        </span>
+
+        <strong id="totalBerat">
+          0
+        </strong>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <span>
+          Total Bobot
+        </span>
+
+        <strong id="totalBobot">
+          0
+        </strong>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- RANKING -->
+
+    <div class="dashboard-card">
+
+      <div class="section-header">
+
+        <h2>
+          Ranking Pelanggaran Siswa
+        </h2>
+
+        <span
+          id="jumlahDataRanking">
+          0 siswa
+        </span>
+
+      </div>
+
+
+      <div
+        id="tabelRanking"
+        class="table-container">
+
+        Belum ada data.
+
+      </div>
+
+    </div>
+
+
+
+    <!-- DETAIL -->
+
+    <div
+      id="detailGuru"
+      class="dashboard-card hidden">
+
+      <div class="section-header">
+
+        <h2 id="detailNamaSiswa">
+          Detail Siswa
+        </h2>
+
+        <button
+          id="btnTutupDetail"
+          class="btn-small">
+
+          Tutup
+
+        </button>
+
+      </div>
+
+
+      <p id="detailIdentitas">
+        -
+      </p>
+
+
+      <div class="detail-summary">
+
+        <div>
+          Ringan:
+          <strong id="detailRingan">
+            0
+          </strong>
+        </div>
+
+        <div>
+          Sedang:
+          <strong id="detailSedang">
+            0
+          </strong>
+        </div>
+
+        <div>
+          Berat:
+          <strong id="detailBerat">
+            0
+          </strong>
+        </div>
+
+        <div>
+          Total Bobot:
+          <strong id="detailTotalBobot">
+            0
+          </strong>
+        </div>
+
+      </div>
+
+
+      <div id="detailDaftarPelanggaran">
+
+      </div>
 
     </div>
 
@@ -435,7 +609,7 @@
 
 
 <!-- =====================================================
-     JAVASCRIPT
+     APP
 ===================================================== -->
 
 <script
@@ -476,7 +650,6 @@ if ("serviceWorker" in navigator) {
 }
 
 </script>
-
 
 </body>
 
