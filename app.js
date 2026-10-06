@@ -1,3 +1,9 @@
+// =====================================================
+// FIREBASE APP
+// APLIKASI PELANGGARAN SISWA
+// SMAN 2 RANGKASBITUNG
+// =====================================================
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
 
 import {
@@ -21,7 +27,6 @@ import {
 
 // =====================================================
 // FIREBASE CONFIG
-// GANTI DENGAN CONFIG FIREBASE ANDA
 // =====================================================
 
 const firebaseConfig = {
@@ -41,6 +46,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
+
 const db = getFirestore(app);
 
 
@@ -79,9 +85,13 @@ const daftarPelanggaran = {
 
 
 const bobotPelanggaran = {
+
   ringan: 1,
+
   sedang: 5,
+
   berat: 10
+
 };
 
 
@@ -90,10 +100,13 @@ const bobotPelanggaran = {
 // =====================================================
 
 let currentUser = null;
+
 let currentRole = null;
+
 let currentUserData = null;
 
 let semuaSiswa = [];
+
 let semuaPelanggaran = [];
 
 let siswaTerpilih = null;
@@ -104,48 +117,73 @@ let siswaTerpilih = null;
 // =====================================================
 
 function el(id) {
+
   return document.getElementById(id);
+
 }
 
 
 function escapeHtml(value) {
 
-  if (value === null || value === undefined) {
+  if (
+    value === null ||
+    value === undefined
+  ) {
+
     return "";
+
   }
 
   return String(value)
+
     .replace(/&/g, "&amp;")
+
     .replace(/</g, "&lt;")
+
     .replace(/>/g, "&gt;")
+
     .replace(/"/g, "&quot;")
+
     .replace(/'/g, "&#039;");
+
 }
 
 
 function formatTanggal(tanggal) {
 
   if (!tanggal) {
+
     return "-";
+
   }
 
-  const parts = tanggal.split("-");
+  const parts =
+    String(tanggal).split("-");
 
   if (parts.length !== 3) {
+
     return tanggal;
+
   }
 
   return `${parts[2]}/${parts[1]}/${parts[0]}`;
+
 }
 
 
 function formatJenis(jenis) {
 
   if (!jenis) {
+
     return "-";
+
   }
 
-  return jenis.charAt(0).toUpperCase() + jenis.slice(1);
+  return (
+    String(jenis).charAt(0).toUpperCase() +
+    String(jenis).slice(1)
+  );
+
 }
 
 
@@ -154,36 +192,83 @@ function setDisplay(id, display) {
   const element = el(id);
 
   if (element) {
+
     element.style.display = display;
+
   }
+
 }
 
 
 // =====================================================
-// HALAMAN
+// TAMPILKAN HALAMAN LOGIN
 // =====================================================
 
 function tampilkanLogin() {
 
-  setDisplay("loginPage", "block");
-  setDisplay("gdsPage", "none");
-  setDisplay("guruPage", "none");
+  setDisplay(
+    "loginPage",
+    "block"
+  );
+
+  setDisplay(
+    "gdsPage",
+    "none"
+  );
+
+  setDisplay(
+    "guruPage",
+    "none"
+  );
+
 }
 
+
+// =====================================================
+// TAMPILKAN HALAMAN GDS
+// =====================================================
 
 function tampilkanGDS() {
 
-  setDisplay("loginPage", "none");
-  setDisplay("gdsPage", "block");
-  setDisplay("guruPage", "none");
+  setDisplay(
+    "loginPage",
+    "none"
+  );
+
+  setDisplay(
+    "gdsPage",
+    "block"
+  );
+
+  setDisplay(
+    "guruPage",
+    "none"
+  );
+
 }
 
 
+// =====================================================
+// TAMPILKAN HALAMAN GURU
+// =====================================================
+
 function tampilkanGuru() {
 
-  setDisplay("loginPage", "none");
-  setDisplay("gdsPage", "none");
-  setDisplay("guruPage", "block");
+  setDisplay(
+    "loginPage",
+    "none"
+  );
+
+  setDisplay(
+    "gdsPage",
+    "none"
+  );
+
+  setDisplay(
+    "guruPage",
+    "block"
+  );
+
 }
 
 
@@ -193,24 +278,78 @@ function tampilkanGuru() {
 
 async function prosesLogin() {
 
-  const email = el("email")?.value.trim();
-  const password = el("password")?.value;
+  const emailElement =
+    el("email");
 
-  const errorBox = el("loginError");
+  const passwordElement =
+    el("password");
+
+  const errorBox =
+    el("loginError");
+
+
+  const email =
+    emailElement
+      ? emailElement.value.trim()
+      : "";
+
+
+  const password =
+    passwordElement
+      ? passwordElement.value
+      : "";
+
 
   if (errorBox) {
+
     errorBox.textContent = "";
+
   }
 
-  if (!email || !password) {
+
+  if (!email) {
 
     if (errorBox) {
+
       errorBox.textContent =
-        "Email dan password harus diisi.";
+        "Email harus diisi.";
+
     }
 
     return;
+
   }
+
+
+  if (!password) {
+
+    if (errorBox) {
+
+      errorBox.textContent =
+        "Password harus diisi.";
+
+    }
+
+    return;
+
+  }
+
+
+  const tombol =
+    document.querySelector(
+      '#loginForm button[type="submit"]'
+    );
+
+
+  if (tombol) {
+
+    tombol.disabled = true;
+
+    tombol.textContent =
+      "Memproses...";
+
+  }
+
 
   try {
 
@@ -220,16 +359,95 @@ async function prosesLogin() {
       password
     );
 
+
   } catch (error) {
 
-    console.error(error);
+    console.error(
+      "LOGIN ERROR:",
+      error
+    );
+
+
+    let pesan =
+      "Login gagal. Periksa email dan password.";
+
+
+    if (
+      error.code ===
+      "auth/invalid-credential"
+    ) {
+
+      pesan =
+        "Email atau password salah.";
+
+    }
+
+
+    if (
+      error.code ===
+      "auth/user-not-found"
+    ) {
+
+      pesan =
+        "Akun pengguna tidak ditemukan.";
+
+    }
+
+
+    if (
+      error.code ===
+      "auth/wrong-password"
+    ) {
+
+      pesan =
+        "Password salah.";
+
+    }
+
+
+    if (
+      error.code ===
+      "auth/too-many-requests"
+    ) {
+
+      pesan =
+        "Terlalu banyak percobaan login. Silakan coba lagi nanti.";
+
+    }
+
+
+    if (
+      error.code ===
+      "auth/network-request-failed"
+    ) {
+
+      pesan =
+        "Koneksi internet bermasalah.";
+
+    }
+
 
     if (errorBox) {
 
       errorBox.textContent =
-        "Login gagal. Periksa email dan password.";
+        pesan;
+
     }
+
+
+  } finally {
+
+    if (tombol) {
+
+      tombol.disabled = false;
+
+      tombol.textContent =
+        "Login";
+
+    }
+
   }
+
 }
 
 
@@ -243,13 +461,21 @@ async function prosesLogout() {
 
     await signOut(auth);
 
+    siswaTerpilih = null;
+
+    semuaSiswa = [];
+
+    semuaPelanggaran = [];
+
   } catch (error) {
 
     console.error(
       "Gagal logout:",
       error
     );
+
   }
+
 }
 
 
@@ -259,22 +485,33 @@ async function prosesLogout() {
 
 async function ambilDataUser(uid) {
 
-  const userRef = doc(
-    db,
-    "users",
-    uid
-  );
+  const userRef =
+    doc(
+      db,
+      "users",
+      uid
+    );
 
-  const snapshot = await getDoc(userRef);
+
+  const snapshot =
+    await getDoc(userRef);
+
 
   if (!snapshot.exists()) {
+
     return null;
+
   }
 
+
   return {
+
     id: snapshot.id,
+
     ...snapshot.data()
+
   };
+
 }
 
 
@@ -282,111 +519,174 @@ async function ambilDataUser(uid) {
 // AUTH STATE
 // =====================================================
 
-onAuthStateChanged(auth, async user => {
+onAuthStateChanged(
+  auth,
+  async user => {
 
-  if (!user) {
+    try {
 
-    currentUser = null;
-    currentRole = null;
-    currentUserData = null;
+      // -----------------------------------------------
+      // BELUM LOGIN
+      // -----------------------------------------------
 
-    tampilkanLogin();
+      if (!user) {
 
-    return;
-  }
+        currentUser = null;
 
-  try {
+        currentRole = null;
 
-    currentUser = user;
+        currentUserData = null;
 
-    currentUserData =
-      await ambilDataUser(user.uid);
+        tampilkanLogin();
 
-    if (!currentUserData) {
+        return;
+
+      }
+
+
+      // -----------------------------------------------
+      // USER LOGIN
+      // -----------------------------------------------
+
+      currentUser = user;
+
+
+      currentUserData =
+        await ambilDataUser(
+          user.uid
+        );
+
+
+      if (!currentUserData) {
+
+        alert(
+          "Data pengguna tidak ditemukan di Firestore."
+        );
+
+        await signOut(auth);
+
+        return;
+
+      }
+
+
+      currentRole =
+        String(
+          currentUserData.role || ""
+        )
+          .trim()
+          .toLowerCase();
+
+
+      // -----------------------------------------------
+      // ROLE GDS
+      // -----------------------------------------------
+
+      if (
+        currentRole === "gds"
+      ) {
+
+        tampilkanGDS();
+
+
+        const nama =
+          el("gdsUserName");
+
+
+        if (nama) {
+
+          nama.textContent =
+            currentUserData.nama ||
+            user.email ||
+            "Petugas GDS";
+
+        }
+
+
+        await loadSemuaSiswa();
+
+        await loadRiwayatGDS();
+
+        return;
+
+      }
+
+
+      // -----------------------------------------------
+      // ROLE GURU
+      // -----------------------------------------------
+
+      if (
+        currentRole === "guru"
+      ) {
+
+        tampilkanGuru();
+
+
+        const nama =
+          el("guruUserName");
+
+
+        if (nama) {
+
+          nama.textContent =
+            currentUserData.nama ||
+            user.email ||
+            "Guru";
+
+        }
+
+
+        await loadSemuaPelanggaranGuru();
+
+        isiFilterKelas();
+
+        tampilkanRekapGuru();
+
+        return;
+
+      }
+
+
+      // -----------------------------------------------
+      // ROLE TIDAK DIKENAL
+      // -----------------------------------------------
 
       alert(
-        "Data pengguna tidak ditemukan di Firestore."
+        "Role pengguna tidak dikenali: " +
+        currentRole
       );
+
 
       await signOut(auth);
 
-      return;
-    }
 
-    currentRole =
-      String(
-        currentUserData.role || ""
-      ).toLowerCase();
+    } catch (error) {
 
-    // -----------------------------------------------
-    // GDS
-    // -----------------------------------------------
+      console.error(
+        "AUTH STATE ERROR:",
+        error
+      );
 
-    if (currentRole === "gds") {
 
-      tampilkanGDS();
+      tampilkanLogin();
 
-      if (el("gdsUserName")) {
 
-        el("gdsUserName").textContent =
-          currentUserData.nama ||
-          user.email ||
-          "Petugas GDS";
+      const errorBox =
+        el("loginError");
+
+
+      if (errorBox) {
+
+        errorBox.textContent =
+          "Gagal memuat data pengguna. Periksa koneksi dan Firestore Rules.";
+
       }
 
-      await loadSemuaSiswa();
-
-      await loadRiwayatGDS();
-
-      return;
     }
 
-
-    // -----------------------------------------------
-    // GURU
-    // -----------------------------------------------
-
-    if (currentRole === "guru") {
-
-      tampilkanGuru();
-
-      if (el("guruUserName")) {
-
-        el("guruUserName").textContent =
-          currentUserData.nama ||
-          user.email ||
-          "Guru";
-      }
-
-      await loadSemuaPelanggaranGuru();
-
-      isiFilterKelas();
-
-      tampilkanRekapGuru();
-
-      return;
-    }
-
-
-    alert(
-      "Role pengguna tidak dikenali."
-    );
-
-    await signOut(auth);
-
-  } catch (error) {
-
-    console.error(
-      "Kesalahan saat memuat pengguna:",
-      error
-    );
-
-    alert(
-      "Gagal memuat data pengguna."
-    );
   }
-
-});
+);
 
 
 // =====================================================
@@ -399,59 +699,88 @@ async function loadSemuaSiswa() {
 
     const snapshot =
       await getDocs(
-        collection(db, "siswa")
+        collection(
+          db,
+          "siswa"
+        )
       );
+
 
     semuaSiswa = [];
 
-    snapshot.forEach(item => {
 
-      semuaSiswa.push({
-        id: item.id,
-        ...item.data()
-      });
+    snapshot.forEach(
+      item => {
 
-    });
+        semuaSiswa.push({
 
-    semuaSiswa.sort((a, b) =>
-      String(a.nama || "")
-        .localeCompare(
+          id: item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
+
+
+    semuaSiswa.sort(
+      (a, b) => {
+
+        return String(
+          a.nama || ""
+        ).localeCompare(
           String(b.nama || ""),
           "id"
-        )
+        );
+
+      }
     );
+
 
   } catch (error) {
 
     console.error(
-      "Gagal mengambil data siswa:",
+      "GAGAL LOAD SISWA:",
       error
     );
+
 
     alert(
       "Gagal mengambil data siswa dari Firebase."
     );
+
   }
+
 }
 
 
 // =====================================================
-// PENCARIAN SISWA
+// CARI SISWA
 // =====================================================
 
 function cariSiswa() {
 
-  const keyword =
-    el("cariSiswa")?.value
-      .trim()
-      .toLowerCase() || "";
+  const input =
+    el("cariSiswa");
+
 
   const container =
     el("hasilPencarian");
 
-  if (!container) {
+
+  if (!input || !container) {
+
     return;
+
   }
+
+
+  const keyword =
+    input.value
+      .trim()
+      .toLowerCase();
+
 
   if (!keyword) {
 
@@ -459,26 +788,33 @@ function cariSiswa() {
       "<p>Masukkan nama atau NISN siswa.</p>";
 
     return;
+
   }
 
+
   const hasil =
-    semuaSiswa.filter(siswa => {
+    semuaSiswa.filter(
+      siswa => {
 
-      const nama =
-        String(
-          siswa.nama || ""
-        ).toLowerCase();
+        const nama =
+          String(
+            siswa.nama || ""
+          ).toLowerCase();
 
-      const nisn =
-        String(
-          siswa.nisn || ""
-        ).toLowerCase();
 
-      return (
-        nama.includes(keyword) ||
-        nisn.includes(keyword)
-      );
-    });
+        const nisn =
+          String(
+            siswa.nisn || ""
+          ).toLowerCase();
+
+
+        return (
+          nama.includes(keyword) ||
+          nisn.includes(keyword)
+        );
+
+      }
+    );
 
 
   if (hasil.length === 0) {
@@ -487,41 +823,77 @@ function cariSiswa() {
       "<p>Siswa tidak ditemukan.</p>";
 
     return;
+
   }
 
 
   container.innerHTML =
-    hasil.map(siswa => `
+    hasil
+      .slice(0, 30)
+      .map(
+        siswa => `
 
-      <div class="student-result">
-
-        <div>
-          <strong>
-            ${escapeHtml(siswa.nama)}
-          </strong>
+        <div class="student-result">
 
           <div>
-            NISN:
-            ${escapeHtml(siswa.nisn || "-")}
+
+            <strong>
+              ${escapeHtml(siswa.nama)}
+            </strong>
+
+            <div>
+              NISN:
+              ${escapeHtml(
+                siswa.nisn || "-"
+              )}
+            </div>
+
+            <div>
+              Kelas:
+              ${escapeHtml(
+                siswa.kelas || "-"
+              )}
+            </div>
+
           </div>
 
-          <div>
-            Kelas:
-            ${escapeHtml(siswa.kelas || "-")}
-          </div>
+          <button
+            type="button"
+            class="btn btn-primary btn-pilih-siswa"
+            data-id="${escapeHtml(siswa.id)}"
+          >
+            Pilih
+          </button>
+
         </div>
 
-        <button
-          type="button"
-          class="btn btn-primary"
-          onclick="pilihSiswa('${siswa.id}')"
-        >
-          Pilih
-        </button>
+      `
+      )
+      .join("");
 
-      </div>
 
-    `).join("");
+  // Event tombol pilih
+  container
+    .querySelectorAll(
+      ".btn-pilih-siswa"
+    )
+    .forEach(
+      tombol => {
+
+        tombol.addEventListener(
+          "click",
+          () => {
+
+            pilihSiswa(
+              tombol.dataset.id
+            );
+
+          }
+        );
+
+      }
+    );
+
 }
 
 
@@ -529,58 +901,114 @@ function cariSiswa() {
 // PILIH SISWA
 // =====================================================
 
-window.pilihSiswa = function(id) {
+function pilihSiswa(id) {
 
   const siswa =
     semuaSiswa.find(
       item => item.id === id
     );
 
+
   if (!siswa) {
+
+    alert(
+      "Data siswa tidak ditemukan."
+    );
+
     return;
+
   }
+
 
   siswaTerpilih = siswa;
 
-  if (el("namaSiswaTerpilih")) {
 
-    el("namaSiswaTerpilih").textContent =
+  const nama =
+    el("namaSiswaTerpilih");
+
+
+  if (nama) {
+
+    nama.textContent =
       siswa.nama || "-";
+
   }
 
-  if (el("detailSiswaTerpilih")) {
 
-    el("detailSiswaTerpilih").innerHTML = `
+  const detail =
+    el("detailSiswaTerpilih");
+
+
+  if (detail) {
+
+    detail.innerHTML = `
 
       NISN:
       <strong>
-        ${escapeHtml(siswa.nisn || "-")}
+        ${escapeHtml(
+          siswa.nisn || "-"
+        )}
       </strong>
 
       <br>
 
       Kelas:
       <strong>
-        ${escapeHtml(siswa.kelas || "-")}
+        ${escapeHtml(
+          siswa.kelas || "-"
+        )}
       </strong>
 
     `;
+
   }
+
 
   setDisplay(
     "siswaTerpilih",
     "block"
   );
 
+
   setDisplay(
     "formPelanggaran",
     "block"
   );
 
-  if (el("statusSimpan")) {
-    el("statusSimpan").textContent = "";
+
+  const hasil =
+    el("hasilPencarian");
+
+
+  if (hasil) {
+
+    hasil.innerHTML = "";
+
   }
-};
+
+
+  const cari =
+    el("cariSiswa");
+
+
+  if (cari) {
+
+    cari.value = "";
+
+  }
+
+
+  const status =
+    el("statusSimpan");
+
+
+  if (status) {
+
+    status.textContent = "";
+
+  }
+
+}
 
 
 // =====================================================
@@ -591,19 +1019,65 @@ function gantiSiswa() {
 
   siswaTerpilih = null;
 
+
   setDisplay(
     "siswaTerpilih",
     "none"
   );
+
 
   setDisplay(
     "formPelanggaran",
     "none"
   );
 
-  if (el("cariSiswa")) {
-    el("cariSiswa").focus();
+
+  const rincian =
+    el("rincianPelanggaran");
+
+
+  if (rincian) {
+
+    rincian.innerHTML =
+      '<option value="">Pilih jenis terlebih dahulu</option>';
+
+    rincian.disabled = true;
+
   }
+
+
+  const jenis =
+    el("jenisPelanggaran");
+
+
+  if (jenis) {
+
+    jenis.value = "";
+
+  }
+
+
+  const bobot =
+    el("nilaiBobot");
+
+
+  if (bobot) {
+
+    bobot.textContent = "0";
+
+  }
+
+
+  const cari =
+    el("cariSiswa");
+
+
+  if (cari) {
+
+    cari.focus();
+
+  }
+
 }
 
 
@@ -613,19 +1087,27 @@ function gantiSiswa() {
 
 function ubahJenisPelanggaran() {
 
-  const jenis =
-    el("jenisPelanggaran")?.value;
+  const jenisElement =
+    el("jenisPelanggaran");
+
 
   const rincian =
     el("rincianPelanggaran");
+
 
   const bobot =
     el("nilaiBobot");
 
 
-  if (!rincian) {
+  if (!jenisElement || !rincian) {
+
     return;
+
   }
+
+
+  const jenis =
+    jenisElement.value;
 
 
   rincian.innerHTML =
@@ -638,27 +1120,46 @@ function ubahJenisPelanggaran() {
   ) {
 
     daftarPelanggaran[jenis]
-      .forEach(item => {
+      .forEach(
+        item => {
 
-        const option =
-          document.createElement("option");
+          const option =
+            document.createElement(
+              "option"
+            );
 
-        option.value = item;
-        option.textContent = item;
 
-        rincian.appendChild(option);
+          option.value = item;
 
-      });
+          option.textContent = item;
+
+
+          rincian.appendChild(
+            option
+          );
+
+        }
+      );
+
+
+    rincian.disabled = false;
+
+  } else {
+
+    rincian.disabled = true;
+
   }
 
 
   if (bobot) {
 
-    bobot.value =
+    bobot.textContent =
       jenis
         ? bobotPelanggaran[jenis]
-        : "";
+        : "0";
+
   }
+
 }
 
 
@@ -668,6 +1169,30 @@ function ubahJenisPelanggaran() {
 
 async function simpanPelanggaran() {
 
+  if (!currentUser) {
+
+    alert(
+      "Sesi login tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  if (
+    currentRole !== "gds"
+  ) {
+
+    alert(
+      "Hanya Petugas GDS yang dapat mencatat pelanggaran."
+    );
+
+    return;
+
+  }
+
+
   if (!siswaTerpilih) {
 
     alert(
@@ -675,20 +1200,24 @@ async function simpanPelanggaran() {
     );
 
     return;
+
   }
 
 
   const tanggal =
-    el("tanggalPelanggaran")?.value;
+    el("tanggalPelanggaran")?.value || "";
+
 
   const jenis =
-    el("jenisPelanggaran")?.value;
+    el("jenisPelanggaran")?.value || "";
+
 
   const rincian =
-    el("rincianPelanggaran")?.value;
+    el("rincianPelanggaran")?.value || "";
+
 
   const waktu =
-    el("waktuPelanggaran")?.value;
+    el("waktuPelanggaran")?.value || "";
 
 
   if (
@@ -703,6 +1232,7 @@ async function simpanPelanggaran() {
     );
 
     return;
+
   }
 
 
@@ -717,28 +1247,43 @@ async function simpanPelanggaran() {
     );
 
     return;
+
   }
 
 
   const tombol =
     el("btnSimpanPelanggaran");
 
+
   if (tombol) {
+
     tombol.disabled = true;
+
+    tombol.textContent =
+      "Menyimpan...";
+
   }
 
 
-  if (el("statusSimpan")) {
+  const status =
+    el("statusSimpan");
 
-    el("statusSimpan").textContent =
-      "Menyimpan...";
+
+  if (status) {
+
+    status.textContent =
+      "Menyimpan data...";
+
   }
 
 
   try {
 
     await addDoc(
-      collection(db, "pelanggaran"),
+      collection(
+        db,
+        "pelanggaran"
+      ),
       {
 
         siswaId:
@@ -772,28 +1317,60 @@ async function simpanPelanggaran() {
           currentUser.uid,
 
         petugasNama:
-          currentUserData.nama ||
+          currentUserData?.nama ||
           currentUser.email ||
           "",
 
         createdAt:
           serverTimestamp()
+
       }
     );
 
 
-    if (el("statusSimpan")) {
+    if (status) {
 
-      el("statusSimpan").textContent =
+      status.textContent =
         "Pelanggaran berhasil disimpan.";
+
     }
 
 
-    // Reset rincian
-    if (el("rincianPelanggaran")) {
+    // Reset form
+    const rincianElement =
+      el("rincianPelanggaran");
 
-      el("rincianPelanggaran").value =
-        "";
+
+    if (rincianElement) {
+
+      rincianElement.innerHTML =
+        '<option value="">Pilih jenis terlebih dahulu</option>';
+
+      rincianElement.disabled = true;
+
+    }
+
+
+    const jenisElement =
+      el("jenisPelanggaran");
+
+
+    if (jenisElement) {
+
+      jenisElement.value = "";
+
+    }
+
+
+    const bobotElement =
+      el("nilaiBobot");
+
+
+    if (bobotElement) {
+
+      bobotElement.textContent =
+        "0";
+
     }
 
 
@@ -803,26 +1380,50 @@ async function simpanPelanggaran() {
   } catch (error) {
 
     console.error(
-      "Gagal menyimpan pelanggaran:",
+      "GAGAL SIMPAN PELANGGARAN:",
       error
     );
 
-    if (el("statusSimpan")) {
 
-      el("statusSimpan").textContent =
+    if (status) {
+
+      status.textContent =
         "Gagal menyimpan data.";
+
     }
 
-    alert(
-      "Gagal menyimpan pelanggaran ke Firebase."
-    );
+
+    if (
+      error.code ===
+      "permission-denied"
+    ) {
+
+      alert(
+        "Firebase menolak penyimpanan. Periksa Firestore Rules."
+      );
+
+    } else {
+
+      alert(
+        "Gagal menyimpan pelanggaran ke Firebase."
+      );
+
+    }
+
 
   } finally {
 
     if (tombol) {
+
       tombol.disabled = false;
+
+      tombol.textContent =
+        "Simpan Pelanggaran";
+
     }
+
   }
+
 }
 
 
@@ -836,38 +1437,58 @@ async function loadRiwayatGDS() {
 
     const snapshot =
       await getDocs(
-        collection(db, "pelanggaran")
+        collection(
+          db,
+          "pelanggaran"
+        )
       );
+
 
     const data = [];
 
-    snapshot.forEach(item => {
 
-      data.push({
-        id: item.id,
-        ...item.data()
-      });
+    snapshot.forEach(
+      item => {
 
-    });
+        data.push({
+
+          id: item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
 
 
-    data.sort((a, b) => {
+    data.sort(
+      (a, b) => {
 
-      const waktuA =
-        `${a.tanggal || ""} ${a.waktu || ""}`;
+        const waktuA =
+          `${a.tanggal || ""} ${a.waktu || ""}`;
 
-      const waktuB =
-        `${b.tanggal || ""} ${b.waktu || ""}`;
 
-      return waktuB.localeCompare(waktuA);
-    });
+        const waktuB =
+          `${b.tanggal || ""} ${b.waktu || ""}`;
+
+
+        return waktuB.localeCompare(
+          waktuA
+        );
+
+      }
+    );
 
 
     const container =
       el("riwayatPelanggaran");
 
+
     if (!container) {
+
       return;
+
     }
 
 
@@ -877,62 +1498,83 @@ async function loadRiwayatGDS() {
         "<p>Belum ada data pelanggaran.</p>";
 
       return;
+
     }
 
 
     container.innerHTML =
-      data.slice(0, 10)
-        .map(item => `
+      data
+        .slice(0, 10)
+        .map(
+          item => `
 
           <div class="violation-item">
 
             <strong>
-              ${escapeHtml(item.namaSiswa)}
+              ${escapeHtml(
+                item.namaSiswa || "-"
+              )}
             </strong>
 
             <div>
               Kelas:
-              ${escapeHtml(item.kelas || "-")}
+              ${escapeHtml(
+                item.kelas || "-"
+              )}
             </div>
 
             <div>
-              ${formatTanggal(item.tanggal)}
+              ${formatTanggal(
+                item.tanggal
+              )}
               -
-              ${escapeHtml(item.waktu || "-")}
+              ${escapeHtml(
+                item.waktu || "-"
+              )}
             </div>
 
             <div>
               ${escapeHtml(
-                formatJenis(item.jenis)
+                formatJenis(
+                  item.jenis
+                )
               )}
               :
-              ${escapeHtml(item.rincian)}
+              ${escapeHtml(
+                item.rincian || "-"
+              )}
             </div>
 
             <div>
               Bobot:
               <strong>
-                ${escapeHtml(item.bobot)}
+                ${escapeHtml(
+                  item.bobot ?? 0
+                )}
               </strong>
             </div>
 
           </div>
 
-        `).join("");
+        `
+        )
+        .join("");
 
 
   } catch (error) {
 
     console.error(
-      "Gagal memuat riwayat:",
+      "GAGAL LOAD RIWAYAT:",
       error
     );
+
   }
+
 }
 
 
 // =====================================================
-// LOAD DATA PELANGGARAN GURU
+// LOAD PELANGGARAN GURU
 // =====================================================
 
 async function loadSemuaPelanggaranGuru() {
@@ -941,32 +1583,48 @@ async function loadSemuaPelanggaranGuru() {
 
     const snapshot =
       await getDocs(
-        collection(db, "pelanggaran")
+        collection(
+          db,
+          "pelanggaran"
+        )
       );
+
 
     semuaPelanggaran = [];
 
-    snapshot.forEach(item => {
 
-      semuaPelanggaran.push({
-        id: item.id,
-        ...item.data()
-      });
+    snapshot.forEach(
+      item => {
 
-    });
+        semuaPelanggaran.push({
+
+          id: item.id,
+
+          ...item.data()
+
+        });
+
+      }
+    );
 
 
   } catch (error) {
 
     console.error(
-      "Gagal mengambil data pelanggaran:",
+      "GAGAL LOAD PELANGGARAN GURU:",
       error
     );
 
+
+    semuaPelanggaran = [];
+
+
     alert(
-      "Gagal mengambil data pelanggaran."
+      "Gagal mengambil data pelanggaran dari Firebase."
     );
+
   }
+
 }
 
 
@@ -979,8 +1637,11 @@ function isiFilterKelas() {
   const select =
     el("filterKelas");
 
+
   if (!select) {
+
     return;
+
   }
 
 
@@ -988,45 +1649,63 @@ function isiFilterKelas() {
     new Set();
 
 
-  semuaPelanggaran.forEach(item => {
+  semuaPelanggaran.forEach(
+    item => {
 
-    if (item.kelas) {
-      kelasSet.add(item.kelas);
+      if (item.kelas) {
+
+        kelasSet.add(
+          String(item.kelas)
+        );
+
+      }
+
     }
-
-  });
+  );
 
 
   const kelas =
-    Array.from(kelasSet)
-      .sort((a, b) =>
-        String(a).localeCompare(
-          String(b),
+    Array.from(
+      kelasSet
+    ).sort(
+      (a, b) =>
+        a.localeCompare(
+          b,
           "id"
         )
-      );
+    );
 
 
   select.innerHTML =
     '<option value="">Semua Kelas</option>';
 
 
-  kelas.forEach(item => {
+  kelas.forEach(
+    item => {
 
-    const option =
-      document.createElement("option");
+      const option =
+        document.createElement(
+          "option"
+        );
 
-    option.value = item;
-    option.textContent = item;
 
-    select.appendChild(option);
+      option.value = item;
 
-  });
+      option.textContent = item;
+
+
+      select.appendChild(
+        option
+      );
+
+    }
+  );
+
 }
 
 
 // =====================================================
-// AMBIL DATA TERFILTER
+// DATA TERFILTER
 // =====================================================
 
 function ambilDataTerfilter() {
@@ -1034,41 +1713,56 @@ function ambilDataTerfilter() {
   const kelas =
     el("filterKelas")?.value || "";
 
+
   const tanggalAwal =
     el("filterTanggalAwal")?.value || "";
+
 
   const tanggalAkhir =
     el("filterTanggalAkhir")?.value || "";
 
 
-  return semuaPelanggaran.filter(item => {
+  return semuaPelanggaran.filter(
+    item => {
 
-    if (
-      kelas &&
-      item.kelas !== kelas
-    ) {
-      return false;
+      if (
+        kelas &&
+        String(item.kelas || "") !==
+        String(kelas)
+      ) {
+
+        return false;
+
+      }
+
+
+      if (
+        tanggalAwal &&
+        String(item.tanggal || "") <
+        tanggalAwal
+      ) {
+
+        return false;
+
+      }
+
+
+      if (
+        tanggalAkhir &&
+        String(item.tanggal || "") >
+        tanggalAkhir
+      ) {
+
+        return false;
+
+      }
+
+
+      return true;
+
     }
+  );
 
-
-    if (
-      tanggalAwal &&
-      item.tanggal < tanggalAwal
-    ) {
-      return false;
-    }
-
-
-    if (
-      tanggalAkhir &&
-      item.tanggal > tanggalAkhir
-    ) {
-      return false;
-    }
-
-
-    return true;
-  });
 }
 
 
@@ -1081,93 +1775,120 @@ function buatRanking(data) {
   const kelompok = {};
 
 
-  data.forEach(item => {
+  data.forEach(
+    item => {
 
-    const key =
-      item.siswaId ||
-      `${item.nisn || ""}_${item.namaSiswa || ""}`;
+      const key =
+        item.siswaId ||
+        `${item.nisn || ""}_${item.namaSiswa || ""}`;
 
 
-    if (!kelompok[key]) {
+      if (!kelompok[key]) {
 
-      kelompok[key] = {
+        kelompok[key] = {
 
-        siswaId:
-          item.siswaId || "",
+          siswaId:
+            item.siswaId || "",
 
-        namaSiswa:
-          item.namaSiswa || "",
+          namaSiswa:
+            item.namaSiswa || "",
 
-        nisn:
-          item.nisn || "",
+          nisn:
+            item.nisn || "",
 
-        kelas:
-          item.kelas || "",
+          kelas:
+            item.kelas || "",
 
-        ringan: 0,
-        sedang: 0,
-        berat: 0,
-        totalBobot: 0,
+          ringan: 0,
 
-        pelanggaran: []
+          sedang: 0,
 
-      };
+          berat: 0,
+
+          totalBobot: 0,
+
+          pelanggaran: []
+
+        };
+
+      }
+
+
+      if (
+        item.jenis ===
+        "ringan"
+      ) {
+
+        kelompok[key].ringan++;
+
+      }
+
+
+      if (
+        item.jenis ===
+        "sedang"
+      ) {
+
+        kelompok[key].sedang++;
+
+      }
+
+
+      if (
+        item.jenis ===
+        "berat"
+      ) {
+
+        kelompok[key].berat++;
+
+      }
+
+
+      kelompok[key].totalBobot +=
+        Number(
+          item.bobot || 0
+        );
+
+
+      kelompok[key].pelanggaran.push(
+        item
+      );
+
     }
-
-
-    if (
-      item.jenis === "ringan"
-    ) {
-
-      kelompok[key].ringan++;
-
-    } else if (
-      item.jenis === "sedang"
-    ) {
-
-      kelompok[key].sedang++;
-
-    } else if (
-      item.jenis === "berat"
-    ) {
-
-      kelompok[key].berat++;
-    }
-
-
-    kelompok[key].totalBobot +=
-      Number(item.bobot || 0);
-
-
-    kelompok[key].pelanggaran.push(item);
-
-  });
+  );
 
 
   const hasil =
-    Object.values(kelompok);
+    Object.values(
+      kelompok
+    );
 
 
-  hasil.sort((a, b) => {
+  hasil.sort(
+    (a, b) => {
 
-    if (
-      b.totalBobot !==
-      a.totalBobot
-    ) {
-
-      return (
-        b.totalBobot -
+      if (
+        b.totalBobot !==
         a.totalBobot
-      );
-    }
+      ) {
+
+        return (
+          b.totalBobot -
+          a.totalBobot
+        );
+
+      }
 
 
-    return String(a.namaSiswa)
-      .localeCompare(
+      return String(
+        a.namaSiswa
+      ).localeCompare(
         String(b.namaSiswa),
         "id"
       );
-  });
+
+    }
+  );
 
 
   hasil.forEach(
@@ -1181,6 +1902,7 @@ function buatRanking(data) {
 
 
   return hasil;
+
 }
 
 
@@ -1202,59 +1924,59 @@ function tampilkanRekapGuru() {
   // SUMMARY
   // -----------------------------------------------
 
-  const totalSiswa =
-    ranking.length;
-
-
-  const totalRingan =
-    data.filter(
-      item => item.jenis === "ringan"
-    ).length;
-
-
-  const totalSedang =
-    data.filter(
-      item => item.jenis === "sedang"
-    ).length;
-
-
-  const totalBerat =
-    data.filter(
-      item => item.jenis === "berat"
-    ).length;
-
-
-  const totalBobot =
-    data.reduce(
-      (total, item) =>
-        total + Number(item.bobot || 0),
-      0
-    );
-
-
   if (el("totalSiswa")) {
+
     el("totalSiswa").textContent =
-      totalSiswa;
+      ranking.length;
+
   }
+
 
   if (el("totalRingan")) {
+
     el("totalRingan").textContent =
-      totalRingan;
+      data.filter(
+        item =>
+          item.jenis === "ringan"
+      ).length;
+
   }
+
 
   if (el("totalSedang")) {
+
     el("totalSedang").textContent =
-      totalSedang;
+      data.filter(
+        item =>
+          item.jenis === "sedang"
+      ).length;
+
   }
+
 
   if (el("totalBerat")) {
+
     el("totalBerat").textContent =
-      totalBerat;
+      data.filter(
+        item =>
+          item.jenis === "berat"
+      ).length;
+
   }
 
+
   if (el("totalBobot")) {
+
     el("totalBobot").textContent =
-      totalBobot;
+      data.reduce(
+        (total, item) =>
+          total +
+          Number(
+            item.bobot || 0
+          ),
+        0
+      );
+
   }
 
 
@@ -1262,18 +1984,22 @@ function tampilkanRekapGuru() {
 
     el("jumlahDataRanking").textContent =
       `${ranking.length} siswa`;
+
   }
 
 
   // -----------------------------------------------
-  // TABEL RANKING
+  // TABEL
   // -----------------------------------------------
 
   const tabel =
     el("tabelRanking");
 
+
   if (!tabel) {
+
     return;
+
   }
 
 
@@ -1281,279 +2007,461 @@ function tampilkanRekapGuru() {
 
     tabel.innerHTML = `
 
-      <tr>
-        <td colspan="7">
-          Belum ada data pelanggaran.
-        </td>
-      </tr>
+      <div class="empty-state">
+
+        Belum ada data pelanggaran.
+
+      </div>
 
     `;
 
     return;
+
   }
 
 
-  tabel.innerHTML =
-    ranking.map(item => `
+  tabel.innerHTML = `
 
-      <tr>
+    <table>
 
-        <td>
-          ${item.peringkat}
-        </td>
+      <thead>
 
-        <td>
-          <strong>
-            ${escapeHtml(item.namaSiswa)}
-          </strong>
+        <tr>
 
-          <br>
+          <th>
+            No
+          </th>
 
-          <small>
-            NISN:
-            ${escapeHtml(item.nisn || "-")}
-          </small>
-        </td>
+          <th>
+            Nama Siswa
+          </th>
 
-        <td>
-          ${escapeHtml(item.kelas || "-")}
-        </td>
+          <th>
+            Kelas
+          </th>
 
-        <td>
-          ${item.ringan}
-        </td>
+          <th>
+            Ringan
+          </th>
 
-        <td>
-          ${item.sedang}
-        </td>
+          <th>
+            Sedang
+          </th>
 
-        <td>
-          ${item.berat}
-        </td>
+          <th>
+            Berat
+          </th>
 
-        <td>
-          <strong>
-            ${item.totalBobot}
-          </strong>
+          <th>
+            Total Bobot
+          </th>
 
-          <br>
+          <th>
+            Aksi
+          </th>
 
-          <button
-            type="button"
-            class="btn btn-primary"
-            onclick="lihatDetailSiswa('${escapeHtml(item.siswaId)}','${escapeHtml(item.nisn)}')"
-          >
-            Detail
-          </button>
+        </tr>
 
-        </td>
+      </thead>
 
-      </tr>
+      <tbody>
 
-    `).join("");
+        ${ranking
+          .map(
+            item => `
+
+            <tr>
+
+              <td>
+                ${item.peringkat}
+              </td>
+
+              <td>
+
+                <strong>
+                  ${escapeHtml(
+                    item.namaSiswa
+                  )}
+                </strong>
+
+                <br>
+
+                <small>
+                  NISN:
+                  ${escapeHtml(
+                    item.nisn || "-"
+                  )}
+                </small>
+
+              </td>
+
+              <td>
+                ${escapeHtml(
+                  item.kelas || "-"
+                )}
+              </td>
+
+              <td>
+                ${item.ringan}
+              </td>
+
+              <td>
+                ${item.sedang}
+              </td>
+
+              <td>
+                ${item.berat}
+              </td>
+
+              <td>
+
+                <strong>
+                  ${item.totalBobot}
+                </strong>
+
+              </td>
+
+              <td>
+
+                <button
+                  type="button"
+                  class="btn btn-primary btn-detail-siswa"
+                  data-siswa-id="${escapeHtml(
+                    item.siswaId
+                  )}"
+                  data-nisn="${escapeHtml(
+                    item.nisn || ""
+                  )}"
+                >
+                  Detail
+                </button>
+
+              </td>
+
+            </tr>
+
+          `
+          )
+          .join("")}
+
+      </tbody>
+
+    </table>
+
+  `;
+
+
+  // Event tombol Detail
+  tabel
+    .querySelectorAll(
+      ".btn-detail-siswa"
+    )
+    .forEach(
+      tombol => {
+
+        tombol.addEventListener(
+          "click",
+          () => {
+
+            lihatDetailSiswa(
+              tombol.dataset.siswaId,
+              tombol.dataset.nisn
+            );
+
+          }
+        );
+
+      }
+    );
+
 }
 
 
 // =====================================================
-// LIHAT DETAIL SISWA
+// DETAIL SISWA
 // =====================================================
 
-window.lihatDetailSiswa =
-  function(siswaId, nisn) {
+function lihatDetailSiswa(
+  siswaId,
+  nisn
+) {
 
-    const data =
-      ambilDataTerfilter();
+  const data =
+    ambilDataTerfilter();
 
 
-    const siswaData =
-      data.filter(item => {
+  const siswaData =
+    data.filter(
+      item => {
+
+        if (siswaId) {
+
+          return (
+            item.siswaId ===
+            siswaId
+          );
+
+        }
+
 
         return (
-          (siswaId &&
-            item.siswaId === siswaId) ||
-
-          (!siswaId &&
-            String(item.nisn || "") ===
-            String(nisn || ""))
+          String(
+            item.nisn || ""
+          ) ===
+          String(
+            nisn || ""
+          )
         );
 
-      });
+      }
+    );
 
 
-    if (siswaData.length === 0) {
+  if (
+    siswaData.length === 0
+  ) {
 
-      alert(
-        "Data pelanggaran siswa tidak ditemukan."
+    alert(
+      "Data pelanggaran siswa tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  const nama =
+    siswaData[0].namaSiswa ||
+    "-";
+
+
+  const kelas =
+    siswaData[0].kelas ||
+    "-";
+
+
+  const nisnSiswa =
+    siswaData[0].nisn ||
+    "-";
+
+
+  const ringan =
+    siswaData.filter(
+      item =>
+        item.jenis ===
+        "ringan"
+    ).length;
+
+
+  const sedang =
+    siswaData.filter(
+      item =>
+        item.jenis ===
+        "sedang"
+    ).length;
+
+
+  const berat =
+    siswaData.filter(
+      item =>
+        item.jenis ===
+        "berat"
+    ).length;
+
+
+  const totalBobot =
+    siswaData.reduce(
+      (total, item) =>
+        total +
+        Number(
+          item.bobot || 0
+        ),
+      0
+    );
+
+
+  // -----------------------------------------------
+  // IDENTITAS
+  // -----------------------------------------------
+
+  if (el("detailNamaSiswa")) {
+
+    el("detailNamaSiswa").textContent =
+      nama;
+
+  }
+
+
+  if (el("detailIdentitas")) {
+
+    el("detailIdentitas").innerHTML = `
+
+      NISN:
+      <strong>
+        ${escapeHtml(
+          nisnSiswa
+        )}
+      </strong>
+
+      <br>
+
+      Kelas:
+      <strong>
+        ${escapeHtml(
+          kelas
+        )}
+      </strong>
+
+    `;
+
+  }
+
+
+  if (el("detailRingan")) {
+
+    el("detailRingan").textContent =
+      ringan;
+
+  }
+
+
+  if (el("detailSedang")) {
+
+    el("detailSedang").textContent =
+      sedang;
+
+  }
+
+
+  if (el("detailBerat")) {
+
+    el("detailBerat").textContent =
+      berat;
+
+  }
+
+
+  if (el("detailTotalBobot")) {
+
+    el("detailTotalBobot").textContent =
+      totalBobot;
+
+  }
+
+
+  // -----------------------------------------------
+  // DAFTAR PELANGGARAN
+  // -----------------------------------------------
+
+  const daftar =
+    el("detailDaftarPelanggaran");
+
+
+  if (daftar) {
+
+    const dataUrut =
+      [...siswaData].sort(
+        (a, b) => {
+
+          const waktuA =
+            `${a.tanggal || ""} ${a.waktu || ""}`;
+
+
+          const waktuB =
+            `${b.tanggal || ""} ${b.waktu || ""}`;
+
+
+          return waktuB.localeCompare(
+            waktuA
+          );
+
+        }
       );
 
-      return;
-    }
 
-
-    const nama =
-      siswaData[0].namaSiswa || "-";
-
-    const kelas =
-      siswaData[0].kelas || "-";
-
-    const nisnSiswa =
-      siswaData[0].nisn || "-";
-
-
-    const ringan =
-      siswaData.filter(
-        item => item.jenis === "ringan"
-      ).length;
-
-
-    const sedang =
-      siswaData.filter(
-        item => item.jenis === "sedang"
-      ).length;
-
-
-    const berat =
-      siswaData.filter(
-        item => item.jenis === "berat"
-      ).length;
-
-
-    const totalBobot =
-      siswaData.reduce(
-        (total, item) =>
-          total + Number(item.bobot || 0),
-        0
-      );
-
-
-    // -----------------------------------------------
-    // IDENTITAS
-    // -----------------------------------------------
-
-    if (el("detailNamaSiswa")) {
-
-      el("detailNamaSiswa").textContent =
-        nama;
-    }
-
-
-    if (el("detailIdentitas")) {
-
-      el("detailIdentitas").innerHTML = `
-
-        NISN:
-        <strong>
-          ${escapeHtml(nisnSiswa)}
-        </strong>
-
-        <br>
-
-        Kelas:
-        <strong>
-          ${escapeHtml(kelas)}
-        </strong>
-
-      `;
-    }
-
-
-    if (el("detailRingan")) {
-      el("detailRingan").textContent =
-        ringan;
-    }
-
-    if (el("detailSedang")) {
-      el("detailSedang").textContent =
-        sedang;
-    }
-
-    if (el("detailBerat")) {
-      el("detailBerat").textContent =
-        berat;
-    }
-
-    if (el("detailTotalBobot")) {
-      el("detailTotalBobot").textContent =
-        totalBobot;
-    }
-
-
-    // -----------------------------------------------
-    // DAFTAR PELANGGARAN
-    // -----------------------------------------------
-
-    const daftar =
-      el("detailDaftarPelanggaran");
-
-
-    if (daftar) {
-
-      siswaData.sort((a, b) => {
-
-        const waktuA =
-          `${a.tanggal || ""} ${a.waktu || ""}`;
-
-        const waktuB =
-          `${b.tanggal || ""} ${b.waktu || ""}`;
-
-        return waktuB.localeCompare(waktuA);
-
-      });
-
-
-      daftar.innerHTML =
-        siswaData.map(item => `
+    daftar.innerHTML =
+      dataUrut
+        .map(
+          item => `
 
           <div
             class="violation-detail-item"
-            id="pelanggaran-${item.id}"
+            data-id="${escapeHtml(
+              item.id
+            )}"
           >
 
             <div>
 
               <strong>
-                ${escapeHtml(item.rincian)}
+                ${escapeHtml(
+                  item.rincian ||
+                  "-"
+                )}
               </strong>
 
               <div>
-                ${formatTanggal(item.tanggal)}
+
+                ${formatTanggal(
+                  item.tanggal
+                )}
+
                 |
-                ${escapeHtml(item.waktu || "-")}
+
+                ${escapeHtml(
+                  item.waktu ||
+                  "-"
+                )}
+
               </div>
 
               <div>
+
                 Jenis:
+
                 <strong>
                   ${escapeHtml(
-                    formatJenis(item.jenis)
+                    formatJenis(
+                      item.jenis
+                    )
                   )}
                 </strong>
 
                 |
+
                 Bobot:
+
                 <strong>
-                  ${escapeHtml(item.bobot)}
+                  ${escapeHtml(
+                    item.bobot ??
+                    0
+                  )}
                 </strong>
+
               </div>
 
               <div>
+
                 Petugas:
+
                 ${escapeHtml(
-                  item.petugasNama || "-"
+                  item.petugasNama ||
+                  "-"
                 )}
+
               </div>
 
             </div>
 
 
-            <!-- TOMBOL HAPUS KHUSUS GURU -->
-
             <div class="detail-action">
 
               <button
                 type="button"
-                class="btn btn-danger"
-                onclick="hapusPelanggaran('${item.id}')"
+                class="btn btn-danger btn-hapus-pelanggaran"
+                data-id="${escapeHtml(
+                  item.id
+                )}"
               >
                 Hapus
               </button>
@@ -1562,145 +2470,178 @@ window.lihatDetailSiswa =
 
           </div>
 
-        `).join("");
-    }
+        `
+        )
+        .join("");
 
 
-    // -----------------------------------------------
-    // TAMPILKAN PANEL DETAIL
-    // -----------------------------------------------
+    // Event tombol Hapus
+    daftar
+      .querySelectorAll(
+        ".btn-hapus-pelanggaran"
+      )
+      .forEach(
+        tombol => {
 
-    setDisplay(
-      "detailGuru",
-      "block"
+          tombol.addEventListener(
+            "click",
+            () => {
+
+              hapusPelanggaran(
+                tombol.dataset.id
+              );
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  // -----------------------------------------------
+  // TAMPILKAN DETAIL
+  // -----------------------------------------------
+
+  setDisplay(
+    "detailGuru",
+    "block"
+  );
+
+
+  const panel =
+    el("detailGuru");
+
+
+  if (panel) {
+
+    setTimeout(
+      () => {
+
+        panel.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+      },
+      100
     );
 
-    const panel =
-      el("detailGuru");
+  }
 
-    if (panel) {
-
-      panel.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
-      });
-    }
-
-  };
+}
 
 
 // =====================================================
 // HAPUS PELANGGARAN
+// KHUSUS GURU
 // =====================================================
 
-window.hapusPelanggaran =
-  async function(pelanggaranId) {
+async function hapusPelanggaran(
+  pelanggaranId
+) {
 
-    // -------------------------------------------------
-    // KEAMANAN SISI CLIENT
-    // -------------------------------------------------
+  if (
+    currentRole !== "guru"
+  ) {
 
-    if (currentRole !== "guru") {
+    alert(
+      "Hanya pengguna Guru yang dapat menghapus data."
+    );
+
+    return;
+
+  }
+
+
+  if (!pelanggaranId) {
+
+    alert(
+      "ID pelanggaran tidak ditemukan."
+    );
+
+    return;
+
+  }
+
+
+  const konfirmasi =
+    confirm(
+      "Apakah Anda yakin ingin menghapus data pelanggaran ini?\n\nData yang sudah dihapus tidak dapat dikembalikan."
+    );
+
+
+  if (!konfirmasi) {
+
+    return;
+
+  }
+
+
+  try {
+
+    await deleteDoc(
+      doc(
+        db,
+        "pelanggaran",
+        pelanggaranId
+      )
+    );
+
+
+    alert(
+      "Data pelanggaran berhasil dihapus."
+    );
+
+
+    // -----------------------------------------------
+    // LOAD ULANG
+    // -----------------------------------------------
+
+    await loadSemuaPelanggaranGuru();
+
+
+    isiFilterKelas();
+
+
+    tampilkanRekapGuru();
+
+
+    setDisplay(
+      "detailGuru",
+      "none"
+    );
+
+
+  } catch (error) {
+
+    console.error(
+      "GAGAL HAPUS PELANGGARAN:",
+      error
+    );
+
+
+    if (
+      error.code ===
+      "permission-denied"
+    ) {
 
       alert(
-        "Hanya pengguna Guru yang dapat menghapus data."
+        "Firebase menolak penghapusan. Periksa Firestore Rules."
       );
 
-      return;
-    }
-
-
-    if (!pelanggaranId) {
+    } else {
 
       alert(
-        "ID pelanggaran tidak ditemukan."
+        "Gagal menghapus data pelanggaran."
       );
 
-      return;
     }
 
+  }
 
-    // -------------------------------------------------
-    // KONFIRMASI
-    // -------------------------------------------------
-
-    const konfirmasi =
-      confirm(
-        "Apakah Anda yakin ingin menghapus data pelanggaran ini?\n\nData yang sudah dihapus tidak dapat dikembalikan."
-      );
-
-
-    if (!konfirmasi) {
-      return;
-    }
-
-
-    try {
-
-      // -------------------------------------------------
-      // HAPUS FIRESTORE
-      // -------------------------------------------------
-
-      await deleteDoc(
-        doc(
-          db,
-          "pelanggaran",
-          pelanggaranId
-        )
-      );
-
-
-      alert(
-        "Data pelanggaran berhasil dihapus."
-      );
-
-
-      // -------------------------------------------------
-      // AMBIL ULANG DATA
-      // -------------------------------------------------
-
-      await loadSemuaPelanggaranGuru();
-
-
-      isiFilterKelas();
-
-
-      tampilkanRekapGuru();
-
-
-      // Tutup detail
-      setDisplay(
-        "detailGuru",
-        "none"
-      );
-
-
-    } catch (error) {
-
-      console.error(
-        "Gagal menghapus pelanggaran:",
-        error
-      );
-
-
-      if (
-        error.code ===
-        "permission-denied"
-      ) {
-
-        alert(
-          "Firebase menolak penghapusan. Pastikan Firestore Rules sudah diperbarui."
-        );
-
-      } else {
-
-        alert(
-          "Gagal menghapus data pelanggaran."
-        );
-      }
-    }
-
-  };
+}
 
 
 // =====================================================
@@ -1713,6 +2654,7 @@ function tutupDetail() {
     "detailGuru",
     "none"
   );
+
 }
 
 
@@ -1724,70 +2666,109 @@ document.addEventListener(
   "DOMContentLoaded",
   () => {
 
-    // LOGIN
-    const btnLogin =
-      el("btnLogin");
+    // -----------------------------------------------
+    // LOGIN FORM
+    // -----------------------------------------------
 
-    if (btnLogin) {
+    const loginForm =
+      el("loginForm");
 
-      btnLogin.addEventListener(
-        "click",
-        prosesLogin
+
+    if (loginForm) {
+
+      loginForm.addEventListener(
+        "submit",
+        event => {
+
+          event.preventDefault();
+
+          prosesLogin();
+
+        }
       );
+
     }
 
 
+    // -----------------------------------------------
     // LOGOUT GDS
-    const btnLogoutGDS = document.getElementById("logoutGds");
+    // -----------------------------------------------
 
-if (btnLogoutGDS) {
-  btnLogoutGDS.addEventListener(
-    "click",
-    prosesLogout
-  );
-}
+    const logoutGds =
+      el("logoutGds");
 
 
+    if (logoutGds) {
+
+      logoutGds.addEventListener(
+        "click",
+        prosesLogout
+      );
+
+    }
+
+
+    // -----------------------------------------------
     // LOGOUT GURU
-    const btnLogoutGuru = document.getElementById("logoutGuru");
+    // -----------------------------------------------
 
-if (btnLogoutGuru) {
-  btnLogoutGuru.addEventListener(
-    "click",
-    prosesLogout
-  );
-}
+    const logoutGuru =
+      el("logoutGuru");
 
 
+    if (logoutGuru) {
+
+      logoutGuru.addEventListener(
+        "click",
+        prosesLogout
+      );
+
+    }
+
+
+    // -----------------------------------------------
     // CARI SISWA
-    const inputCari =
+    // -----------------------------------------------
+
+    const cari =
       el("cariSiswa");
 
-    if (inputCari) {
 
-      inputCari.addEventListener(
+    if (cari) {
+
+      cari.addEventListener(
         "input",
         cariSiswa
       );
+
     }
 
 
+    // -----------------------------------------------
     // GANTI SISWA
-    const btnGanti =
+    // -----------------------------------------------
+
+    const ganti =
       el("btnGantiSiswa");
 
-    if (btnGanti) {
 
-      btnGanti.addEventListener(
+    if (ganti) {
+
+      ganti.addEventListener(
         "click",
         gantiSiswa
       );
+
     }
 
 
+    // -----------------------------------------------
     // JENIS PELANGGARAN
+    // -----------------------------------------------
+
     const jenis =
       el("jenisPelanggaran");
+
 
     if (jenis) {
 
@@ -1795,100 +2776,208 @@ if (btnLogoutGuru) {
         "change",
         ubahJenisPelanggaran
       );
+
     }
 
 
+    // -----------------------------------------------
     // SIMPAN
-    const btnSimpan =
+    // -----------------------------------------------
+
+    const simpan =
       el("btnSimpanPelanggaran");
 
-    if (btnSimpan) {
 
-      btnSimpan.addEventListener(
+    if (simpan) {
+
+      simpan.addEventListener(
         "click",
         simpanPelanggaran
       );
+
     }
 
 
-    // FILTER REKAP
-    const btnRekap =
+    // -----------------------------------------------
+    // FILTER
+    // -----------------------------------------------
+
+    const rekap =
       el("btnTampilkanRekap");
 
-    if (btnRekap) {
 
-      btnRekap.addEventListener(
+    if (rekap) {
+
+      rekap.addEventListener(
         "click",
         tampilkanRekapGuru
       );
+
     }
 
 
+    // -----------------------------------------------
     // TUTUP DETAIL
-    const btnTutup =
+    // -----------------------------------------------
+
+    const tutup =
       el("btnTutupDetail");
 
-    if (btnTutup) {
 
-      btnTutup.addEventListener(
+    if (tutup) {
+
+      tutup.addEventListener(
         "click",
         tutupDetail
       );
+
     }
 
 
-    // TANGGAL DEFAULT GDS
+    // -----------------------------------------------
+    // DEFAULT TANGGAL
+    // -----------------------------------------------
+
     const tanggal =
       el("tanggalPelanggaran");
+
 
     if (tanggal) {
 
       const sekarang =
         new Date();
 
+
       const tahun =
         sekarang.getFullYear();
+
 
       const bulan =
         String(
           sekarang.getMonth() + 1
-        ).padStart(2, "0");
+        ).padStart(
+          2,
+          "0"
+        );
+
 
       const hari =
         String(
           sekarang.getDate()
-        ).padStart(2, "0");
+        ).padStart(
+          2,
+          "0"
+        );
+
 
       tanggal.value =
         `${tahun}-${bulan}-${hari}`;
+
     }
 
 
-    // WAKTU DEFAULT
+    // -----------------------------------------------
+    // DEFAULT WAKTU
+    // -----------------------------------------------
+
     const waktu =
       el("waktuPelanggaran");
+
 
     if (waktu) {
 
       const sekarang =
         new Date();
 
+
       const jam =
         String(
           sekarang.getHours()
-        ).padStart(2, "0");
+        ).padStart(
+          2,
+          "0"
+        );
+
 
       const menit =
         String(
           sekarang.getMinutes()
-        ).padStart(2, "0");
+        ).padStart(
+          2,
+          "0"
+        );
+
 
       waktu.value =
         `${jam}:${menit}`;
+
+    }
+
+
+    // -----------------------------------------------
+    // INIT TAMPILAN
+    // -----------------------------------------------
+
+    // Jangan menyembunyikan login
+    // pada saat halaman pertama kali dibuka.
+
+    if (
+      !auth.currentUser
+    ) {
+
+      tampilkanLogin();
+
     }
 
   }
 );
 
 
+// =====================================================
+// SERVICE WORKER
+// =====================================================
 
+if (
+  "serviceWorker" in navigator
+) {
+
+  window.addEventListener(
+    "load",
+    () => {
+
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then(
+          registration => {
+
+            console.log(
+              "Service Worker berhasil:",
+              registration.scope
+            );
+
+          }
+        )
+        .catch(
+          error => {
+
+            console.error(
+              "Service Worker gagal:",
+              error
+            );
+
+          }
+        );
+
+    }
+  );
+
+}
+
+
+// =====================================================
+// DEBUG
+// =====================================================
+
+console.log(
+  "Aplikasi Pelanggaran Siswa berhasil memuat app.js"
+);
