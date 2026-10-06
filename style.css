@@ -9,9 +9,6 @@ body {
   color: #1e293b;
 }
 
-
-/* ================= GENERAL ================= */
-
 .hidden {
   display: none !important;
 }
@@ -33,15 +30,11 @@ body {
 .login-card {
   width: 100%;
   max-width: 420px;
-
   background: white;
-
   padding: 30px;
-
   border-radius: 18px;
-
   box-shadow:
-    0 8px 30px rgba(0, 0, 0, 0.10);
+    0 8px 30px rgba(0,0,0,0.10);
 }
 
 .login-card h1 {
@@ -71,21 +64,19 @@ body {
   font-weight: bold;
 }
 
-.form-group input {
+.form-group input,
+.form-group select {
   width: 100%;
-
   padding: 13px;
-
   border: 1px solid #cbd5e1;
-
   border-radius: 9px;
-
   font-size: 16px;
-
   outline: none;
+  background: white;
 }
 
-.form-group input:focus {
+.form-group input:focus,
+.form-group select:focus {
   border-color: #0d6efd;
 }
 
@@ -100,15 +91,10 @@ button {
 
 .btn-primary {
   width: 100%;
-
   padding: 13px;
-
   border-radius: 9px;
-
   background: #0d6efd;
-
   color: white;
-
   font-weight: bold;
 }
 
@@ -118,14 +104,17 @@ button {
 
 .btn-logout {
   padding: 10px 18px;
-
   border-radius: 8px;
-
   background: #dc3545;
-
   color: white;
-
   font-weight: bold;
+}
+
+.btn-small {
+  padding: 8px 14px;
+  border-radius: 7px;
+  background: #64748b;
+  color: white;
 }
 
 
@@ -133,12 +122,8 @@ button {
 
 .error-message {
   color: #dc3545;
-
   text-align: center;
-
   min-height: 20px;
-
-  margin-top: 15px;
 }
 
 
@@ -146,29 +131,20 @@ button {
 
 .dashboard {
   max-width: 1100px;
-
   margin: auto;
-
   padding: 20px;
 }
 
 .topbar {
   background: white;
-
   padding: 20px;
-
   border-radius: 15px;
-
   display: flex;
-
   justify-content: space-between;
-
   align-items: center;
-
   gap: 15px;
-
   box-shadow:
-    0 4px 15px rgba(0, 0, 0, 0.06);
+    0 4px 15px rgba(0,0,0,0.06);
 }
 
 .topbar h1 {
@@ -177,35 +153,165 @@ button {
 
 .topbar p {
   margin: 5px 0 0;
-
   color: #64748b;
 }
 
 .dashboard-card {
   margin-top: 20px;
-
   background: white;
-
   padding: 25px;
-
   border-radius: 15px;
-
   box-shadow:
-    0 4px 15px rgba(0, 0, 0, 0.06);
+    0 4px 15px rgba(0,0,0,0.06);
 }
 
-.menu-placeholder {
-  margin-top: 20px;
 
-  padding: 20px;
+/* ================= SEARCH ================= */
 
-  background: #f1f5f9;
+.search-results {
+  margin-top: 5px;
+}
+
+.search-item {
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  background: white;
+}
+
+.search-item:hover {
+  background: #eff6ff;
+}
+
+.search-item strong {
+  display: block;
+}
+
+.search-item span {
+  color: #64748b;
+  font-size: 14px;
+}
+
+
+/* ================= SELECTED STUDENT ================= */
+
+.selected-student {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+
+  padding: 15px;
+
+  margin-bottom: 20px;
+
+  background: #eff6ff;
+
+  border: 1px solid #bfdbfe;
+
+  border-radius: 10px;
+}
+
+.selected-student strong {
+  display: block;
+}
+
+.selected-student span {
+  color: #475569;
+  font-size: 14px;
+}
+
+
+/* ================= BOBOT ================= */
+
+.bobot-box {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  padding: 18px;
+
+  margin-bottom: 18px;
 
   border-radius: 10px;
 
-  text-align: center;
+  background: #f1f5f9;
+}
 
+.bobot-box strong {
+  font-size: 30px;
+}
+
+
+/* ================= STATUS ================= */
+
+.status-message {
+  text-align: center;
+  margin-top: 15px;
+  min-height: 20px;
+}
+
+.status-success {
+  color: #15803d;
+}
+
+.status-error {
+  color: #dc2626;
+}
+
+
+/* ================= RIWAYAT ================= */
+
+.riwayat-item {
+  padding: 15px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.riwayat-item:last-child {
+  border-bottom: none;
+}
+
+.riwayat-item strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.riwayat-detail {
   color: #64748b;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.badge {
+  display: inline-block;
+
+  padding: 4px 8px;
+
+  border-radius: 5px;
+
+  font-size: 12px;
+
+  font-weight: bold;
+}
+
+.badge-ringan {
+  background: #dcfce7;
+  color: #166534;
+}
+
+.badge-sedang {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.badge-berat {
+  background: #fee2e2;
+  color: #991b1b;
 }
 
 
@@ -218,6 +324,10 @@ button {
   }
 
   .topbar {
+    align-items: flex-start;
+  }
+
+  .selected-student {
     align-items: flex-start;
   }
 
