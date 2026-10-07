@@ -2671,19 +2671,13 @@ document.addEventListener(
     // LOGIN FORM
     // -----------------------------------------------
 
-    const loginForm =
-      el("loginForm");
-
+    const loginForm = el("loginForm");
 
     if (loginForm) {
 
       loginForm.addEventListener(
         "submit",
         event => {
-
-           console.log("DOM siap");
-
-    tampilkanLogin();
 
           event.preventDefault();
 
@@ -2699,9 +2693,7 @@ document.addEventListener(
     // LOGOUT GDS
     // -----------------------------------------------
 
-    const logoutGds =
-      el("logoutGds");
-
+    const logoutGds = el("logoutGds");
 
     if (logoutGds) {
 
@@ -2717,9 +2709,7 @@ document.addEventListener(
     // LOGOUT GURU
     // -----------------------------------------------
 
-    const logoutGuru =
-      el("logoutGuru");
-
+    const logoutGuru = el("logoutGuru");
 
     if (logoutGuru) {
 
@@ -2735,9 +2725,7 @@ document.addEventListener(
     // CARI SISWA
     // -----------------------------------------------
 
-    const cari =
-      el("cariSiswa");
-
+    const cari = el("cariSiswa");
 
     if (cari) {
 
@@ -2753,9 +2741,7 @@ document.addEventListener(
     // GANTI SISWA
     // -----------------------------------------------
 
-    const ganti =
-      el("btnGantiSiswa");
-
+    const ganti = el("btnGantiSiswa");
 
     if (ganti) {
 
@@ -2771,9 +2757,7 @@ document.addEventListener(
     // JENIS PELANGGARAN
     // -----------------------------------------------
 
-    const jenis =
-      el("jenisPelanggaran");
-
+    const jenis = el("jenisPelanggaran");
 
     if (jenis) {
 
@@ -2786,12 +2770,10 @@ document.addEventListener(
 
 
     // -----------------------------------------------
-    // SIMPAN
+    // SIMPAN PELANGGARAN
     // -----------------------------------------------
 
-    const simpan =
-      el("btnSimpanPelanggaran");
-
+    const simpan = el("btnSimpanPelanggaran");
 
     if (simpan) {
 
@@ -2804,12 +2786,10 @@ document.addEventListener(
 
 
     // -----------------------------------------------
-    // FILTER
+    // FILTER REKAP
     // -----------------------------------------------
 
-    const rekap =
-      el("btnTampilkanRekap");
-
+    const rekap = el("btnTampilkanRekap");
 
     if (rekap) {
 
@@ -2825,9 +2805,7 @@ document.addEventListener(
     // TUTUP DETAIL
     // -----------------------------------------------
 
-    const tutup =
-      el("btnTutupDetail");
-
+    const tutup = el("btnTutupDetail");
 
     if (tutup) {
 
@@ -2843,19 +2821,14 @@ document.addEventListener(
     // DEFAULT TANGGAL
     // -----------------------------------------------
 
-    const tanggal =
-      el("tanggalPelanggaran");
+    const tanggal = el("tanggalPelanggaran");
 
+    if (tanggal && !tanggal.value) {
 
-    if (tanggal) {
-
-      const sekarang =
-        new Date();
-
+      const sekarang = new Date();
 
       const tahun =
         sekarang.getFullYear();
-
 
       const bulan =
         String(
@@ -2865,7 +2838,6 @@ document.addEventListener(
           "0"
         );
 
-
       const hari =
         String(
           sekarang.getDate()
@@ -2873,7 +2845,6 @@ document.addEventListener(
           2,
           "0"
         );
-
 
       tanggal.value =
         `${tahun}-${bulan}-${hari}`;
@@ -2885,15 +2856,11 @@ document.addEventListener(
     // DEFAULT WAKTU
     // -----------------------------------------------
 
-    const waktu =
-      el("waktuPelanggaran");
+    const waktu = el("waktuPelanggaran");
 
+    if (waktu && !waktu.value) {
 
-    if (waktu) {
-
-      const sekarang =
-        new Date();
-
+      const sekarang = new Date();
 
       const jam =
         String(
@@ -2903,7 +2870,6 @@ document.addEventListener(
           "0"
         );
 
-
       const menit =
         String(
           sekarang.getMinutes()
@@ -2912,7 +2878,6 @@ document.addEventListener(
           "0"
         );
 
-
       waktu.value =
         `${jam}:${menit}`;
 
@@ -2920,19 +2885,16 @@ document.addEventListener(
 
 
     // -----------------------------------------------
-    // INIT TAMPILAN
+    // INIT LOGIN
     // -----------------------------------------------
 
-    // Jangan menyembunyikan login
-    // pada saat halaman pertama kali dibuka.
+    // AuthStateChanged akan menentukan
+    // apakah user masuk ke login, GDS,
+    // atau Guru.
 
-    if (
-      !auth.currentUser
-    ) {
-
-      tampilkanLogin();
-
-    }
+    console.log(
+      "DOM siap. Menunggu Firebase Auth..."
+    );
 
   }
 );
