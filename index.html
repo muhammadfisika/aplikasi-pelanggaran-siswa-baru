@@ -7,25 +7,32 @@
 
   <meta
     name="viewport"
-    content="width=device-width, initial-scale=1.0">
+    content="width=device-width, initial-scale=1.0"
+  >
 
   <meta
     name="theme-color"
-    content="#0d6efd">
+    content="#0d6efd"
+  >
 
   <meta
     name="description"
-    content="Aplikasi Pencatat Pelanggaran Siswa">
+    content="Aplikasi Pencatat Pelanggaran Siswa SMAN 2 Rangkasbitung"
+  >
 
   <link
     rel="manifest"
-    href="./manifest.json">
+    href="./manifest.json"
+  >
 
   <link
     rel="stylesheet"
-    href="./style.css">
+    href="./style.css"
+  >
 
-  <title>Pelanggaran Siswa</title>
+  <title>
+    Pelanggaran Siswa
+  </title>
 
 </head>
 
@@ -34,12 +41,13 @@
 
 
 <!-- =====================================================
-     LOGIN
-===================================================== -->
+     HALAMAN LOGIN
+     ===================================================== -->
 
 <section
   id="loginPage"
-  class="page">
+  class="page"
+>
 
   <div class="login-card">
 
@@ -51,12 +59,17 @@
       SMAN 2 Rangkasbitung
     </p>
 
+
     <h2>
       Login
     </h2>
 
 
-    <form id="loginForm">
+    <form
+      id="loginForm"
+      autocomplete="on"
+    >
+
 
       <div class="form-group">
 
@@ -67,9 +80,11 @@
         <input
           type="email"
           id="email"
+          name="email"
           placeholder="Masukkan email"
           autocomplete="username"
-          required>
+          required
+        >
 
       </div>
 
@@ -83,27 +98,31 @@
         <input
           type="password"
           id="password"
+          name="password"
           placeholder="Masukkan password"
           autocomplete="current-password"
-          required>
+          required
+        >
 
       </div>
 
 
       <button
-  id="btnLogin"
-  type="button"
-  class="btn-primary">
-  Login
-</button>
+        type="submit"
+        class="btn-primary"
+      >
+        Login
+      </button>
+
 
     </form>
 
 
     <p
       id="loginError"
-      class="error-message">
-    </p>
+      class="error-message"
+    ></p>
+
 
   </div>
 
@@ -112,19 +131,21 @@
 
 
 <!-- =====================================================
-     DASHBOARD PETUGAS GDS
-===================================================== -->
+     HALAMAN PETUGAS GDS
+     ===================================================== -->
 
 <section
   id="gdsPage"
-  class="page hidden">
+  class="page hidden"
+>
 
   <div class="dashboard">
 
 
-    <!-- HEADER -->
+    <!-- TOPBAR -->
 
     <div class="topbar">
+
 
       <div>
 
@@ -140,20 +161,24 @@
 
 
       <button
+        type="button"
         id="logoutGds"
-        class="btn-logout">
-
+        class="btn-logout"
+      >
         Keluar
-
       </button>
+
 
     </div>
 
 
 
-    <!-- CATAT PELANGGARAN -->
+    <!-- =================================================
+         FORM CATAT PELANGGARAN
+         ================================================= -->
 
     <div class="dashboard-card">
+
 
       <h2>
         Catat Pelanggaran Siswa
@@ -168,16 +193,20 @@
           Cari Nama atau NISN Siswa
         </label>
 
+
         <input
           type="text"
           id="cariSiswa"
           placeholder="Ketik nama atau NISN siswa..."
-          autocomplete="off">
+          autocomplete="off"
+        >
+
 
         <div
           id="hasilPencarian"
-          class="search-results">
-        </div>
+          class="search-results"
+        ></div>
+
 
       </div>
 
@@ -187,17 +216,25 @@
 
       <div
         id="siswaTerpilih"
-        class="selected-student hidden">
+        class="selected-student hidden"
+      >
+
 
         <div>
 
-          <strong id="namaSiswaTerpilih">
+          <strong
+            id="namaSiswaTerpilih"
+          >
             -
           </strong>
 
-          <span id="detailSiswaTerpilih">
+
+          <span
+            id="detailSiswaTerpilih"
+          >
             -
           </span>
+
 
         </div>
 
@@ -205,11 +242,11 @@
         <button
           type="button"
           id="btnGantiSiswa"
-          class="btn-small">
-
+          class="btn-small"
+        >
           Ganti
-
         </button>
+
 
       </div>
 
@@ -219,7 +256,8 @@
 
       <div
         id="formPelanggaran"
-        class="hidden">
+        class="hidden"
+      >
 
 
         <!-- TANGGAL -->
@@ -230,10 +268,11 @@
             Tanggal
           </label>
 
+
           <input
             type="date"
             id="tanggalPelanggaran"
-            required>
+          >
 
         </div>
 
@@ -247,26 +286,33 @@
             Jenis Pelanggaran
           </label>
 
+
           <select
-            id="jenisPelanggaran">
+            id="jenisPelanggaran"
+          >
 
             <option value="">
               -- Pilih Jenis --
             </option>
 
+
             <option value="ringan">
               Ringan — Bobot 1
             </option>
+
 
             <option value="sedang">
               Sedang — Bobot 5
             </option>
 
+
             <option value="berat">
               Berat — Bobot 10
             </option>
 
+
           </select>
+
 
         </div>
 
@@ -280,15 +326,19 @@
             Rincian Pelanggaran
           </label>
 
+
           <select
             id="rincianPelanggaran"
-            disabled>
+            disabled
+          >
 
             <option value="">
               Pilih jenis terlebih dahulu
             </option>
 
+
           </select>
+
 
         </div>
 
@@ -302,10 +352,11 @@
             Waktu Kejadian
           </label>
 
+
           <input
             type="time"
             id="waktuPelanggaran"
-            required>
+          >
 
         </div>
 
@@ -319,9 +370,13 @@
             Bobot Pelanggaran
           </span>
 
-          <strong id="nilaiBobot">
+
+          <strong
+            id="nilaiBobot"
+          >
             0
           </strong>
+
 
         </div>
 
@@ -332,37 +387,47 @@
         <button
           type="button"
           id="btnSimpanPelanggaran"
-          class="btn-primary">
-
+          class="btn-primary"
+        >
           Simpan Pelanggaran
-
         </button>
 
 
         <p
           id="statusSimpan"
-          class="status-message">
-        </p>
+          class="status-message"
+        ></p>
+
 
       </div>
+
 
     </div>
 
 
 
-    <!-- RIWAYAT -->
+    <!-- =================================================
+         RIWAYAT PELANGGARAN
+         ================================================= -->
 
     <div class="dashboard-card">
 
-      <h2>
-        Pelanggaran Terbaru
-      </h2>
 
-      <div id="riwayatPelanggaran">
+      <div class="section-header">
 
-        Memuat data...
+        <h2>
+          Pelanggaran Terbaru
+        </h2>
 
       </div>
+
+
+      <div
+        id="riwayatPelanggaran"
+      >
+        Memuat data...
+      </div>
+
 
     </div>
 
@@ -374,19 +439,21 @@
 
 
 <!-- =====================================================
-     DASHBOARD GURU
-===================================================== -->
+     HALAMAN GURU
+     ===================================================== -->
 
 <section
   id="guruPage"
-  class="page hidden">
+  class="page hidden"
+>
 
   <div class="dashboard">
 
 
-    <!-- HEADER -->
+    <!-- TOPBAR -->
 
     <div class="topbar">
+
 
       <div>
 
@@ -394,28 +461,34 @@
           Dashboard Guru
         </h1>
 
+
         <p id="guruUserName">
           -
         </p>
+
 
       </div>
 
 
       <button
+        type="button"
         id="logoutGuru"
-        class="btn-logout">
-
+        class="btn-logout"
+      >
         Keluar
-
       </button>
+
 
     </div>
 
 
 
-    <!-- FILTER -->
+    <!-- =================================================
+         FILTER REKAP
+         ================================================= -->
 
     <div class="dashboard-card">
+
 
       <h2>
         Rekap & Ranking Pelanggaran
@@ -425,7 +498,7 @@
       <div class="filter-grid">
 
 
-        <!-- KELAS -->
+        <!-- FILTER KELAS -->
 
         <div class="form-group">
 
@@ -433,13 +506,18 @@
             Kelas
           </label>
 
-          <select id="filterKelas">
+
+          <select
+            id="filterKelas"
+          >
 
             <option value="">
               Semua Kelas
             </option>
 
+
           </select>
+
 
         </div>
 
@@ -453,9 +531,11 @@
             Dari Tanggal
           </label>
 
+
           <input
             type="date"
-            id="filterTanggalAwal">
+            id="filterTanggalAwal"
+          >
 
         </div>
 
@@ -469,29 +549,33 @@
             Sampai Tanggal
           </label>
 
+
           <input
             type="date"
-            id="filterTanggalAkhir">
+            id="filterTanggalAkhir"
+          >
 
         </div>
 
+
       </div>
+
 
 
       <button
         type="button"
         id="btnTampilkanRekap"
-        class="btn-primary">
-
+        class="btn-primary"
+      >
         Tampilkan Rekap
-
       </button>
 
 
       <p
         id="statusRekap"
-        class="status-message">
-      </p>
+        class="status-message"
+      ></p>
+
 
     </div>
 
@@ -499,11 +583,12 @@
 
     <!-- =================================================
          RINGKASAN
-    ================================================== -->
+         ================================================= -->
 
     <div
       id="ringkasanGuru"
-      class="summary-grid">
+      class="summary-grid"
+    >
 
 
       <div class="summary-card">
@@ -512,11 +597,16 @@
           Siswa Melanggar
         </span>
 
-        <strong id="totalSiswa">
+
+        <strong
+          id="totalSiswa"
+        >
           0
         </strong>
 
+
       </div>
+
 
 
       <div class="summary-card">
@@ -525,11 +615,16 @@
           Pelanggaran Ringan
         </span>
 
-        <strong id="totalRingan">
+
+        <strong
+          id="totalRingan"
+        >
           0
         </strong>
 
+
       </div>
+
 
 
       <div class="summary-card">
@@ -538,11 +633,16 @@
           Pelanggaran Sedang
         </span>
 
-        <strong id="totalSedang">
+
+        <strong
+          id="totalSedang"
+        >
           0
         </strong>
 
+
       </div>
+
 
 
       <div class="summary-card">
@@ -551,11 +651,16 @@
           Pelanggaran Berat
         </span>
 
-        <strong id="totalBerat">
+
+        <strong
+          id="totalBerat"
+        >
           0
         </strong>
 
+
       </div>
+
 
 
       <div class="summary-card">
@@ -564,9 +669,13 @@
           Total Bobot
         </span>
 
-        <strong id="totalBobot">
+
+        <strong
+          id="totalBobot"
+        >
           0
         </strong>
+
 
       </div>
 
@@ -576,30 +685,37 @@
 
 
     <!-- =================================================
-         RANKING
-    ================================================== -->
+         TABEL RANKING
+         ================================================= -->
 
     <div class="dashboard-card">
 
 
       <div class="section-header">
 
+
         <h2>
           Ranking Pelanggaran Siswa
         </h2>
 
-        <span id="jumlahDataRanking">
+
+        <span
+          id="jumlahDataRanking"
+        >
           0 siswa
         </span>
+
 
       </div>
 
 
       <div
         id="tabelRanking"
-        class="table-container">
+        class="table-container"
+      >
 
         Belum ada data.
+
 
       </div>
 
@@ -610,31 +726,42 @@
 
     <!-- =================================================
          DETAIL SISWA
-    ================================================== -->
+         ================================================= -->
 
     <div
       id="detailGuru"
       class="dashboard-card"
-      style="display:none;">
+      style="display: none;"
+    >
 
 
       <div class="section-header">
+
 
         <h2>
           Detail Pelanggaran Siswa
         </h2>
 
+
       </div>
 
 
-      <!-- IDENTITAS -->
 
-      <h2 id="detailNamaSiswa">
+      <!-- NAMA -->
+
+      <h2
+        id="detailNamaSiswa"
+      >
         -
       </h2>
 
 
-      <p id="detailIdentitas">
+
+      <!-- IDENTITAS -->
+
+      <p
+        id="detailIdentitas"
+      >
         -
       </p>
 
@@ -651,11 +778,16 @@
             Ringan
           </span>
 
-          <strong id="detailRingan">
+
+          <strong
+            id="detailRingan"
+          >
             0
           </strong>
 
+
         </div>
+
 
 
         <div class="summary-card">
@@ -664,11 +796,16 @@
             Sedang
           </span>
 
-          <strong id="detailSedang">
+
+          <strong
+            id="detailSedang"
+          >
             0
           </strong>
 
+
         </div>
+
 
 
         <div class="summary-card">
@@ -677,11 +814,16 @@
             Berat
           </span>
 
-          <strong id="detailBerat">
+
+          <strong
+            id="detailBerat"
+          >
             0
           </strong>
 
+
         </div>
+
 
 
         <div class="summary-card">
@@ -690,9 +832,13 @@
             Total Bobot
           </span>
 
-          <strong id="detailTotalBobot">
+
+          <strong
+            id="detailTotalBobot"
+          >
             0
           </strong>
+
 
         </div>
 
@@ -705,17 +851,16 @@
 
 
 
-      <!-- DAFTAR PELANGGARAN -->
-
       <h3>
         Daftar Pelanggaran
       </h3>
 
 
-      <div id="detailDaftarPelanggaran">
 
+      <div
+        id="detailDaftarPelanggaran"
+      >
         Belum ada data.
-
       </div>
 
 
@@ -727,10 +872,9 @@
       <button
         type="button"
         id="btnTutupDetail"
-        class="btn-secondary">
-
+        class="btn-secondary"
+      >
         Tutup Detail
-
       </button>
 
 
@@ -745,12 +889,12 @@
 
 <!-- =====================================================
      JAVASCRIPT
-===================================================== -->
+     ===================================================== -->
 
 <script
   type="module"
-  src="./app.js">
-</script>
+  src="./app.js"
+></script>
 
 
 </body>
