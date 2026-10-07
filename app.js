@@ -205,6 +205,7 @@ function setDisplay(id, display) {
 // =====================================================
 
 function tampilkanLogin() {
+   console.log("Menampilkan halaman login");
 
   setDisplay(
     "loginPage",
@@ -2679,6 +2680,10 @@ document.addEventListener(
       loginForm.addEventListener(
         "submit",
         event => {
+
+           console.log("DOM siap");
+
+    tampilkanLogin();
 
           event.preventDefault();
 
