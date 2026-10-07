@@ -1,12 +1,37 @@
+/* =========================================================
+   RESET & GLOBAL
+   ========================================================= */
+
 * {
   box-sizing: border-box;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: Arial, Helvetica, sans-serif;
   background: #f1f5f9;
   color: #1e293b;
+  line-height: 1.5;
+}
+
+button,
+input,
+select {
+  font-family: inherit;
+}
+
+button {
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
 }
 
 .hidden {
@@ -18,37 +43,73 @@ body {
 }
 
 
-/* ================= LOGIN ================= */
+/* =========================================================
+   LOGIN
+   ========================================================= */
 
 #loginPage {
+  min-height: 100vh;
+
   display: flex;
   align-items: center;
   justify-content: center;
+
   padding: 20px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eff6ff 0%,
+      #f8fafc 50%,
+      #e0f2fe 100%
+    );
 }
 
 .login-card {
   width: 100%;
   max-width: 420px;
-  background: white;
-  padding: 30px;
-  border-radius: 18px;
+
+  background: #ffffff;
+
+  padding: 32px;
+
+  border-radius: 20px;
+
   box-shadow:
-    0 8px 30px rgba(0,0,0,.10);
+    0 10px 35px rgba(15, 23, 42, 0.12);
 }
 
 .login-card h1 {
+  margin: 0;
+
   text-align: center;
-  margin-bottom: 5px;
+
+  font-size: 27px;
+  color: #0d6efd;
 }
 
-.subtitle {
+.login-card .subtitle {
+  margin: 5px 0 25px;
+
   text-align: center;
+
   color: #64748b;
+
+  font-size: 15px;
+}
+
+.login-card h2 {
+  margin: 0 0 20px;
+
+  text-align: center;
+
+  font-size: 21px;
 }
 
 
-/* ================= FORM ================= */
+/* =========================================================
+   FORM
+   ========================================================= */
 
 .form-group {
   margin-bottom: 18px;
@@ -56,190 +117,461 @@ body {
 
 .form-group label {
   display: block;
+
   margin-bottom: 7px;
-  font-weight: bold;
+
+  font-weight: 700;
+
+  color: #334155;
+
+  font-size: 14px;
 }
 
 .form-group input,
 .form-group select {
   width: 100%;
-  padding: 13px;
+
+  padding: 12px 13px;
+
   border: 1px solid #cbd5e1;
+
   border-radius: 9px;
-  font-size: 16px;
+
+  background: #ffffff;
+
+  color: #1e293b;
+
+  font-size: 15px;
+
   outline: none;
-  background: white;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #94a3b8;
 }
 
 .form-group input:focus,
 .form-group select:focus {
   border-color: #0d6efd;
+
+  box-shadow:
+    0 0 0 3px rgba(13, 110, 253, 0.12);
+}
+
+.form-group select:disabled {
+  background: #f1f5f9;
+
+  color: #94a3b8;
+
+  cursor: not-allowed;
 }
 
 
-/* ================= BUTTON ================= */
-
-button {
-  border: none;
-  cursor: pointer;
-  font-size: 15px;
-}
+/* =========================================================
+   BUTTON
+   ========================================================= */
 
 .btn-primary {
   width: 100%;
-  padding: 13px;
+
+  padding: 13px 16px;
+
   border-radius: 9px;
+
   background: #0d6efd;
-  color: white;
-  font-weight: bold;
+
+  color: #ffffff;
+
+  font-size: 15px;
+
+  font-weight: 700;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
 }
 
 .btn-primary:hover {
   background: #0b5ed7;
 }
 
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
 .btn-primary:disabled {
-  opacity: .6;
+  opacity: 0.6;
+
   cursor: not-allowed;
 }
 
+
+/* LOGOUT */
+
 .btn-logout {
   padding: 10px 18px;
+
   border-radius: 8px;
+
   background: #dc3545;
-  color: white;
-  font-weight: bold;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+
+  transition: background 0.2s ease;
 }
+
+.btn-logout:hover {
+  background: #bb2d3b;
+}
+
+
+/* SMALL BUTTON */
 
 .btn-small {
   padding: 8px 14px;
+
   border-radius: 7px;
+
   background: #64748b;
-  color: white;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.btn-small:hover {
+  background: #475569;
 }
 
 
-/* ================= DASHBOARD ================= */
+/* SECONDARY BUTTON */
+
+.btn-secondary {
+  padding: 10px 16px;
+
+  border-radius: 8px;
+
+  background: #64748b;
+
+  color: #ffffff;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background: #475569;
+}
+
+
+/* DANGER BUTTON */
+
+.btn-danger {
+  padding: 9px 15px;
+
+  border-radius: 7px;
+
+  background: #dc3545;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+}
+
+.btn-danger:hover {
+  background: #bb2d3b;
+}
+
+.btn-danger:active {
+  transform: scale(0.98);
+}
+
+
+/* =========================================================
+   ERROR LOGIN
+   ========================================================= */
+
+.error-message {
+  min-height: 20px;
+
+  margin: 15px 0 0;
+
+  text-align: center;
+
+  color: #dc2626;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   DASHBOARD
+   ========================================================= */
 
 .dashboard {
+  width: 100%;
+
   max-width: 1200px;
-  margin: auto;
+
+  margin: 0 auto;
+
   padding: 20px;
 }
 
-.topbar {
-  background: white;
-  padding: 20px;
-  border-radius: 15px;
 
+/* =========================================================
+   TOPBAR
+   ========================================================= */
+
+.topbar {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
+
   gap: 15px;
 
+  padding: 20px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
   box-shadow:
-    0 4px 15px rgba(0,0,0,.06);
+    0 4px 15px rgba(15, 23, 42, 0.06);
 }
 
 .topbar h1 {
   margin: 0;
+
+  font-size: 25px;
+
+  color: #0f172a;
 }
 
 .topbar p {
   margin: 5px 0 0;
+
   color: #64748b;
-}
 
-.dashboard-card {
-  margin-top: 20px;
-  background: white;
-  padding: 25px;
-  border-radius: 15px;
-
-  box-shadow:
-    0 4px 15px rgba(0,0,0,.06);
-}
-
-
-/* ================= SEARCH ================= */
-
-.search-results {
-  margin-top: 5px;
-}
-
-.search-item {
-  padding: 12px;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  margin-bottom: 5px;
-  cursor: pointer;
-  background: white;
-}
-
-.search-item:hover {
-  background: #eff6ff;
-}
-
-.search-item strong {
-  display: block;
-}
-
-.search-item span {
-  color: #64748b;
   font-size: 14px;
 }
 
 
-/* ================= SELECTED ================= */
+/* =========================================================
+   DASHBOARD CARD
+   ========================================================= */
+
+.dashboard-card {
+  margin-top: 20px;
+
+  padding: 25px;
+
+  background: #ffffff;
+
+  border-radius: 15px;
+
+  box-shadow:
+    0 4px 15px rgba(15, 23, 42, 0.06);
+}
+
+.dashboard-card > h2 {
+  margin-top: 0;
+
+  margin-bottom: 22px;
+
+  color: #0f172a;
+
+  font-size: 21px;
+}
+
+
+/* =========================================================
+   SEARCH SISWA
+   ========================================================= */
+
+.search-results {
+  margin-top: 8px;
+}
+
+.search-item {
+  padding: 12px 14px;
+
+  margin-bottom: 6px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.search-item:hover {
+  background: #eff6ff;
+
+  border-color: #bfdbfe;
+}
+
+.search-item strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #0f172a;
+}
+
+.search-item span {
+  color: #64748b;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   SISWA TERPILIH
+   ========================================================= */
 
 .selected-student {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
 
+  gap: 15px;
+
   padding: 15px;
+
   margin-bottom: 20px;
 
   background: #eff6ff;
+
   border: 1px solid #bfdbfe;
+
   border-radius: 10px;
 }
 
 .selected-student strong {
   display: block;
+
+  margin-bottom: 3px;
+
+  color: #1e3a8a;
 }
 
 .selected-student span {
   color: #475569;
+
   font-size: 14px;
 }
 
 
-/* ================= BOBOT ================= */
+/* =========================================================
+   FORM PELANGGARAN
+   ========================================================= */
+
+#formPelanggaran {
+  padding-top: 5px;
+}
+
+
+/* =========================================================
+   BOBOT
+   ========================================================= */
 
 .bobot-box {
   display: flex;
+
   justify-content: space-between;
+
   align-items: center;
 
+  gap: 15px;
+
   padding: 18px;
+
   margin-bottom: 18px;
 
+  border: 1px solid #e2e8f0;
+
   border-radius: 10px;
-  background: #f1f5f9;
+
+  background: #f8fafc;
+}
+
+.bobot-box span {
+  color: #475569;
+
+  font-weight: 600;
 }
 
 .bobot-box strong {
-  font-size: 30px;
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  min-width: 50px;
+
+  height: 45px;
+
+  padding: 0 12px;
+
+  border-radius: 9px;
+
+  background: #0d6efd;
+
+  color: #ffffff;
+
+  font-size: 25px;
 }
 
 
-/* ================= STATUS ================= */
+/* =========================================================
+   STATUS MESSAGE
+   ========================================================= */
 
 .status-message {
-  text-align: center;
   min-height: 20px;
-  margin-top: 15px;
+
+  margin: 15px 0 0;
+
+  text-align: center;
+
+  font-size: 14px;
+
+  font-weight: 600;
 }
 
 .status-success {
@@ -251,111 +583,85 @@ button {
 }
 
 
-/* ================= RIWAYAT ================= */
+/* =========================================================
+   RIWAYAT PELANGGARAN
+   ========================================================= */
+
+#riwayatPelanggaran {
+  min-height: 30px;
+}
 
 .riwayat-item {
-  padding: 15px;
+  padding: 15px 0;
+
   border-bottom: 1px solid #e2e8f0;
+}
+
+.riwayat-item:first-child {
+  padding-top: 5px;
 }
 
 .riwayat-item:last-child {
   border-bottom: none;
+
+  padding-bottom: 5px;
 }
 
 .riwayat-item strong {
   display: block;
+
   margin-bottom: 5px;
+
+  color: #0f172a;
 }
 
 .riwayat-detail {
   color: #64748b;
+
   font-size: 14px;
-  line-height: 1.6;
+
+  line-height: 1.7;
 }
 
 
-/* ================= BADGE ================= */
+/* =========================================================
+   BADGE
+   ========================================================= */
 
 .badge {
   display: inline-block;
-  padding: 4px 8px;
+
+  padding: 4px 9px;
+
   border-radius: 5px;
+
   font-size: 12px;
-  font-weight: bold;
+
+  font-weight: 700;
 }
 
 .badge-ringan {
   background: #dcfce7;
+
   color: #166534;
 }
 
 .badge-sedang {
   background: #fef3c7;
+
   color: #92400e;
 }
 
 .badge-berat {
   background: #fee2e2;
+
   color: #991b1b;
 }
 
 
-/* ================= GURU FILTER ================= */
-
-.filter-grid {
-  display: grid;
-
-  grid-template-columns:
-    1fr 1fr 1fr;
-
-  gap: 15px;
-}
-
-
-/* ================= SUMMARY ================= */
-
-.summary-grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(5, 1fr);
-
-  gap: 15px;
-
-  margin-top: 20px;
-}
-
-.summary-card {
-  background: white;
-
-  padding: 20px;
-
-  border-radius: 12px;
-
-  box-shadow:
-    0 4px 15px rgba(0,0,0,.06);
-
-  text-align: center;
-}
-
-.summary-card span {
-  display: block;
-
-  color: #64748b;
-
-  font-size: 14px;
-
-  margin-bottom: 10px;
-}
-
-.summary-card strong {
-  display: block;
-
-  font-size: 28px;
-}
-
-
-/* ================= SECTION HEADER ================= */
+/* =========================================================
+   SECTION HEADER
+   ========================================================= */
 
 .section-header {
   display: flex;
@@ -369,41 +675,141 @@ button {
 
 .section-header h2 {
   margin: 0;
+
+  color: #0f172a;
+
+  font-size: 21px;
 }
 
 .section-header span {
   color: #64748b;
+
+  font-size: 14px;
 }
 
 
-/* ================= TABLE ================= */
+/* =========================================================
+   GURU FILTER
+   ========================================================= */
 
-.table-container {
-  overflow-x: auto;
+.filter-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 15px;
+}
+
+.filter-grid .form-group {
+  margin-bottom: 0;
+}
+
+#btnTampilkanRekap {
+  margin-top: 20px;
+}
+
+
+/* =========================================================
+   SUMMARY
+   ========================================================= */
+
+.summary-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(5, 1fr);
+
+  gap: 15px;
 
   margin-top: 20px;
+}
+
+.summary-card {
+  min-width: 0;
+
+  padding: 20px;
+
+  background: #ffffff;
+
+  border-radius: 12px;
+
+  box-shadow:
+    0 4px 15px rgba(15, 23, 42, 0.06);
+
+  text-align: center;
+}
+
+.summary-card span {
+  display: block;
+
+  margin-bottom: 10px;
+
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.4;
+}
+
+.summary-card strong {
+  display: block;
+
+  color: #0f172a;
+
+  font-size: 28px;
+
+  line-height: 1.2;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-container {
+  width: 100%;
+
+  margin-top: 20px;
+
+  overflow-x: auto;
+
+  -webkit-overflow-scrolling: touch;
 }
 
 .ranking-table {
   width: 100%;
 
-  border-collapse: collapse;
-
   min-width: 700px;
+
+  border-collapse: collapse;
 }
 
 .ranking-table th,
 .ranking-table td {
   padding: 12px;
 
-  border-bottom:
-    1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
 
   text-align: left;
+
+  vertical-align: middle;
 }
 
 .ranking-table th {
   background: #f8fafc;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.ranking-table td {
+  font-size: 14px;
 }
 
 .ranking-table tbody tr:hover {
@@ -413,13 +819,13 @@ button {
 .rank-number {
   font-size: 18px;
 
-  font-weight: bold;
+  font-weight: 700;
 }
 
 .student-name {
   color: #0d6efd;
 
-  font-weight: bold;
+  font-weight: 700;
 
   cursor: pointer;
 }
@@ -431,38 +837,57 @@ button {
 .total-score {
   font-size: 20px;
 
-  font-weight: bold;
+  font-weight: 700;
 }
 
 
-/* ================= DETAIL ================= */
+/* =========================================================
+   DETAIL GURU
+   ========================================================= */
 
-.detail-summary {
-  display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
-  gap: 10px;
-
-  margin: 20px 0;
+#detailGuru {
+  scroll-margin-top: 20px;
 }
 
-.detail-summary > div {
-  padding: 15px;
+#detailNamaSiswa {
+  margin: 5px 0 5px;
 
-  background: #f8fafc;
+  color: #0d6efd;
 
-  border-radius: 8px;
-
-  text-align: center;
+  font-size: 23px;
 }
+
+#detailIdentitas {
+  margin-top: 0;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+#detailGuru hr {
+  margin: 25px 0;
+
+  border: 0;
+
+  border-top: 1px solid #e2e8f0;
+}
+
+#detailGuru h3 {
+  margin-bottom: 15px;
+
+  color: #334155;
+}
+
+
+/* =========================================================
+   DETAIL DAFTAR PELANGGARAN
+   ========================================================= */
 
 .detail-item {
   padding: 15px 0;
 
-  border-bottom:
-    1px solid #e2e8f0;
+  border-bottom: 1px solid #e2e8f0;
 }
 
 .detail-item:last-child {
@@ -473,16 +898,108 @@ button {
   display: block;
 
   margin-bottom: 5px;
+
+  color: #0f172a;
 }
 
 .detail-item small {
   color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.6;
 }
 
 
-/* ================= MOBILE ================= */
+/* =========================================================
+   DETAIL PELANGGARAN GURU
+   ========================================================= */
+
+.violation-detail-item {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 15px;
+
+  margin-bottom: 12px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.violation-detail-item:hover {
+  border-color: #cbd5e1;
+
+  box-shadow:
+    0 3px 10px rgba(15, 23, 42, 0.05);
+}
+
+.detail-action {
+  flex-shrink: 0;
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty-state {
+  padding: 30px 15px;
+
+  text-align: center;
+
+  color: #64748b;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   SCROLLBAR
+   ========================================================= */
+
+.table-container::-webkit-scrollbar {
+  height: 7px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #f1f5f9;
+
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLET
+   ========================================================= */
 
 @media (max-width: 900px) {
+
+  .dashboard {
+    padding: 15px;
+  }
 
   .summary-grid {
     grid-template-columns:
@@ -491,91 +1008,185 @@ button {
 
   .filter-grid {
     grid-template-columns:
-      1fr 1fr;
+      repeat(2, 1fr);
   }
 
 }
 
+
+/* =========================================================
+   RESPONSIVE — MOBILE
+   ========================================================= */
+
 @media (max-width: 600px) {
 
-  .dashboard {
-    padding: 12px;
+  body {
+    font-size: 14px;
   }
+
+
+  /* LOGIN */
+
+  #loginPage {
+    padding: 15px;
+  }
+
+  .login-card {
+    padding: 25px 20px;
+
+    border-radius: 16px;
+  }
+
+  .login-card h1 {
+    font-size: 23px;
+  }
+
+
+  /* DASHBOARD */
+
+  .dashboard {
+    padding: 10px;
+  }
+
+
+  /* TOPBAR */
 
   .topbar {
     align-items: flex-start;
+
+    padding: 16px;
+
+    border-radius: 12px;
   }
 
-  .filter-grid {
-    grid-template-columns: 1fr;
+  .topbar h1 {
+    font-size: 20px;
   }
 
-  .summary-grid {
-    grid-template-columns:
-      1fr 1fr;
-  }
-
-  .detail-summary {
-    grid-template-columns:
-      1fr 1fr;
-  }
-
-  .selected-student {
-    align-items: flex-start;
+  .topbar p {
+    font-size: 13px;
   }
 
   .btn-logout {
     padding: 8px 12px;
+
+    font-size: 13px;
   }
 
-}
 
-/* =========================================
-   DETAIL PELANGGARAN GURU
-   ========================================= */
+  /* CARD */
 
-.violation-detail-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 15px;
-  padding: 15px;
-  margin-bottom: 12px;
-  border: 1px solid #ddd;
-  border-radius: 10px;
-  background: #fff;
-}
+  .dashboard-card {
+    padding: 18px;
 
+    margin-top: 12px;
 
-.detail-action {
-  flex-shrink: 0;
-}
+    border-radius: 12px;
+  }
+
+  .dashboard-card > h2 {
+    font-size: 18px;
+
+    margin-bottom: 18px;
+  }
 
 
-.btn-danger {
-  background: #dc3545;
-  color: #fff;
-  border: none;
-  padding: 9px 15px;
-  border-radius: 7px;
-  cursor: pointer;
-}
+  /* FILTER */
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+
+    gap: 0;
+  }
+
+  .filter-grid .form-group {
+    margin-bottom: 15px;
+  }
 
 
-.btn-danger:hover {
-  background: #bb2d3b;
-}
+  /* SUMMARY */
+
+  .summary-grid {
+    grid-template-columns:
+      1fr 1fr;
+
+    gap: 10px;
+
+    margin-top: 12px;
+  }
+
+  .summary-card {
+    padding: 15px 10px;
+
+    border-radius: 10px;
+  }
+
+  .summary-card span {
+    font-size: 12px;
+  }
+
+  .summary-card strong {
+    font-size: 23px;
+  }
 
 
-.btn-danger:active {
-  transform: scale(0.98);
-}
+  /* SECTION HEADER */
+
+  .section-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 5px;
+  }
+
+  .section-header h2 {
+    font-size: 18px;
+  }
 
 
-@media (max-width: 600px) {
+  /* SELECTED STUDENT */
+
+  .selected-student {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .selected-student .btn-small {
+    width: 100%;
+  }
+
+
+  /* BOBOT */
+
+  .bobot-box {
+    padding: 15px;
+  }
+
+  .bobot-box strong {
+    min-width: 45px;
+
+    height: 40px;
+
+    font-size: 22px;
+  }
+
+
+  /* DETAIL */
+
+  #detailNamaSiswa {
+    font-size: 20px;
+  }
+
+
+  /* VIOLATION */
 
   .violation-detail-item {
     flex-direction: column;
+
     align-items: stretch;
   }
 
@@ -585,6 +1196,58 @@ button {
 
   .detail-action .btn-danger {
     width: 100%;
+  }
+
+
+  /* SECONDARY */
+
+  .btn-secondary {
+    width: 100%;
+  }
+
+}
+
+
+/* =========================================================
+   RESPONSIVE — SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .login-card {
+    padding: 20px 15px;
+  }
+
+  .dashboard {
+    padding: 7px;
+  }
+
+  .dashboard-card {
+    padding: 15px;
+  }
+
+  .summary-grid {
+    gap: 8px;
+  }
+
+  .summary-card {
+    padding: 13px 7px;
+  }
+
+  .summary-card strong {
+    font-size: 21px;
+  }
+
+  .topbar {
+    padding: 13px;
+  }
+
+  .topbar h1 {
+    font-size: 18px;
+  }
+
+  .btn-logout {
+    padding: 7px 9px;
   }
 
 }
