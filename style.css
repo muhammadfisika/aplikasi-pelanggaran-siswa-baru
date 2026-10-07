@@ -1251,3 +1251,229 @@ button:disabled {
   }
 
 }
+
+/* =========================================================
+   KOMPATIBILITAS DENGAN APP.JS
+   ========================================================= */
+
+/* Semua tombol dengan class .btn */
+.btn {
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border: none;
+
+  cursor: pointer;
+
+  font-family: inherit;
+
+  text-decoration: none;
+}
+
+
+/* Tombol primary yang tidak full width */
+.btn.btn-primary {
+  width: auto;
+
+  padding: 9px 14px;
+
+  border-radius: 7px;
+
+  background: #0d6efd;
+
+  color: #ffffff;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.btn.btn-primary:hover {
+  background: #0b5ed7;
+}
+
+
+/* =========================================================
+   HASIL PENCARIAN SISWA
+   ========================================================= */
+
+.student-result {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 13px;
+
+  margin-bottom: 7px;
+
+  border: 1px solid #e2e8f0;
+
+  border-radius: 9px;
+
+  background: #ffffff;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.student-result:hover {
+  background: #eff6ff;
+
+  border-color: #bfdbfe;
+}
+
+.student-result strong {
+  display: block;
+
+  margin-bottom: 3px;
+
+  color: #0f172a;
+}
+
+.student-result div div {
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.5;
+}
+
+
+/* =========================================================
+   RIWAYAT PELANGGARAN GDS
+   ========================================================= */
+
+.violation-item {
+  padding: 15px 0;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.violation-item:first-child {
+  padding-top: 5px;
+}
+
+.violation-item:last-child {
+  border-bottom: none;
+
+  padding-bottom: 5px;
+}
+
+.violation-item > strong {
+  display: block;
+
+  margin-bottom: 6px;
+
+  color: #0f172a;
+
+  font-size: 16px;
+}
+
+.violation-item > div {
+  color: #64748b;
+
+  font-size: 13px;
+
+  line-height: 1.7;
+}
+
+
+/* =========================================================
+   TABEL RANKING
+   APP.JS MENGHASILKAN <table> TANPA CLASS
+   ========================================================= */
+
+#tabelRanking table {
+  width: 100%;
+
+  min-width: 750px;
+
+  border-collapse: collapse;
+}
+
+#tabelRanking th,
+#tabelRanking td {
+  padding: 12px;
+
+  border-bottom: 1px solid #e2e8f0;
+
+  text-align: left;
+
+  vertical-align: middle;
+}
+
+#tabelRanking th {
+  background: #f8fafc;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+#tabelRanking td {
+  font-size: 14px;
+}
+
+#tabelRanking tbody tr:hover {
+  background: #f8fafc;
+}
+
+#tabelRanking td strong {
+  color: #0f172a;
+}
+
+#tabelRanking td small {
+  color: #64748b;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   DETAIL SISWA
+   ========================================================= */
+
+#detailDaftarPelanggaran {
+  margin-top: 10px;
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .student-result {
+    align-items: stretch;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+  .student-result .btn {
+    width: 100%;
+  }
+
+  #tabelRanking {
+    overflow-x: auto;
+  }
+
+  #tabelRanking table {
+    min-width: 750px;
+  }
+
+}
